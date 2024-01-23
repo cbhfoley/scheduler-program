@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane prefHeight="800.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.Login">
+   <children>
+      <Button layoutX="206.0" layoutY="445.0" mnemonicParsing="false" onAction="#exitButtonAction" text="Exit" />
+      <Button layoutX="326.0" layoutY="445.0" mnemonicParsing="false" onAction="#loginButtonAction" text="Login" />
+      <Label layoutX="139.0" layoutY="304.0" text="Username">
+         <font>
+            <Font size="15.0" />
+         </font>
+      </Label>
+      <Label layoutX="115.0" layoutY="45.0" text="Scheduler Login">
+         <font>
+            <Font size="56.0" />
+         </font>
+      </Label>
+      <TextField layoutX="313.0" layoutY="302.0" />
+      <TextField layoutX="313.0" layoutY="360.0" />
+      <Label layoutX="139.0" layoutY="364.0" text="Password">
+         <font>
+            <Font size="15.0" />
+         </font>
+      </Label>
+      <Label layoutX="173.0" layoutY="550.0" text="Region" />
+      <Label layoutX="326.0" layoutY="550.0" text="REGION UPDATED " />
+   </children>
+</AnchorPane>
