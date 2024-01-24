@@ -31,4 +31,21 @@ public class DivisionsDAO {
 
         return divisions;
     }
+
+    public int getDivisionIdByName(String divisionName) throws SQLException {
+        int divisionId = -1; // Default value indicating failure or not found
+
+        String query = "SELECT Division_ID FROM first_level_divisions WHERE Division = ?";
+        try (PreparedStatement statement = JDBC.connection.prepareStatement(query)) {
+            statement.setString(1, divisionName);
+
+            try (ResultSet resultSet = statement.executeQuery()) {
+                if (resultSet.next()) {
+                    divisionId = resultSet.getInt("Division_ID");
+                }
+            }
+        }
+
+        return divisionId;
+    }
 }
