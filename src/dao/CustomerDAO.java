@@ -33,6 +33,8 @@ public class CustomerDAO {
                         resultSet.getString("Phone"),
                         resultSet.getString("Create_Date"),
                         resultSet.getString("Created_By"),
+                        resultSet.getString("Last_Update"),
+                        resultSet.getString("Last_Updated_By"),
                         resultSet.getString("Division")
                 );
                 customers.add(customer);
@@ -42,8 +44,8 @@ public class CustomerDAO {
     }
 
     public void addCustomer(Customer customer) throws SQLException {
-        String query = "INSERT INTO customers (Customer_Name, Address, Postal_Code, Phone, Create_Date, Created_By, Division_ID) " +
-                "VALUES (?, ?, ?, ?, ?, ?, ?)";
+        String query = "INSERT INTO customers (Customer_Name, Address, Postal_Code, Phone, Create_Date, Created_By, Last_Update, Last_Updated_By, Division_ID) " +
+                "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
         try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
 
@@ -53,7 +55,9 @@ public class CustomerDAO {
             preparedStatement.setString(4, customer.getPhone());
             preparedStatement.setString(5, customer.getCreateDate());
             preparedStatement.setString(6, customer.getCreatedBy());
-            preparedStatement.setString(7, customer.getDivisionId());
+            preparedStatement.setString(7, customer.getLastUpdate());
+            preparedStatement.setString(8, customer.getLastUpdatedBy());
+            preparedStatement.setString(9, customer.getDivisionId());
 
             preparedStatement.executeUpdate();
         }

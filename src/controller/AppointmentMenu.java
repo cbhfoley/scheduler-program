@@ -51,7 +51,7 @@ public class AppointmentMenu {
     private TableColumn<Appointments, Integer> contactIdColumn;
 
     @FXML
-    public void initialize() throws SQLException{
+    public void initialize() throws SQLException {
         apptIdColumn.setCellValueFactory(cellData -> new SimpleIntegerProperty(cellData.getValue().getApptId()).asObject());
         titleColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getTitle()));
         descriptionColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getDescription()));
@@ -68,20 +68,14 @@ public class AppointmentMenu {
         contactIdColumn.setCellValueFactory(cellData -> new SimpleIntegerProperty(cellData.getValue().getContactId()).asObject());
 
         loadAppointmentsData();
-
     }
 
-    private void loadAppointmentsData() throws SQLException{
+    private void loadAppointmentsData() throws SQLException {
         AppointmentsDAO appointmentsDAO = new AppointmentsDAO();
         ObservableList<Appointments> appointmentsList = appointmentsDAO.getAllAppointments();
 
         appointmentsTableView.setItems(appointmentsList);
     }
-
-
-
-
-
 
     public void mainMenuButtonAction(ActionEvent actionEvent) throws IOException {
         Parent parent = FXMLLoader.load(getClass().getResource("/view/mainMenu.fxml"));

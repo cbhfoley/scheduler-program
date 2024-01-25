@@ -1,10 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.text.*?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="800.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.Login">
+<AnchorPane prefHeight="800.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.Login">
    <children>
       <Button layoutX="206.0" layoutY="445.0" mnemonicParsing="false" onAction="#exitButtonAction" text="Exit" />
       <Button layoutX="326.0" layoutY="445.0" mnemonicParsing="false" onAction="#loginButtonAction" text="Login" />
@@ -18,8 +21,7 @@
             <Font size="56.0" />
          </font>
       </Label>
-      <TextField layoutX="313.0" layoutY="302.0" />
-      <TextField layoutX="313.0" layoutY="360.0" />
+      <TextField fx:id="usernameTextField" layoutX="313.0" layoutY="302.0" />
       <Label layoutX="139.0" layoutY="364.0" text="Password">
          <font>
             <Font size="15.0" />
@@ -27,5 +29,6 @@
       </Label>
       <Label layoutX="173.0" layoutY="550.0" text="Region" />
       <Label layoutX="326.0" layoutY="550.0" text="REGION UPDATED " />
+      <PasswordField fx:id="passwordPasswordField" layoutX="313.0" layoutY="362.0" />
    </children>
 </AnchorPane>

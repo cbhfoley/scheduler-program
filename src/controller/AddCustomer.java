@@ -95,18 +95,18 @@ public class AddCustomer {
         String divisionIdString = String.valueOf(divisionId);
 
 
-
         if (customerName.isEmpty() || phone.isEmpty() || address.isEmpty() || postalCode.isEmpty() || division == null) {
             alertDisplay(1);
         } else {
 
 
-            Customer customer = new Customer(100, customerName, address, postalCode, phone, time, "Chad", divisionIdString);
+            Customer customer = new Customer(1, customerName, address, postalCode, phone, time, "Chad", time, "Chad", divisionIdString);
 
 
             customerDAO.addCustomer(customer);
         }
     }
+
     // Temporarily here?
     private String getCurrentTimestamp() {
         LocalDateTime now = LocalDateTime.now();

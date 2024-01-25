@@ -12,7 +12,7 @@ public class Divisions {
     private String lastUpdatedBy;
     private int countryId;
 
-    public Divisions(int divisionId, String division, LocalDateTime createdDate, String createdBy, LocalDateTime lastUpdate, String lastUpdatedBy, int countryId){
+    public Divisions(int divisionId, String division, LocalDateTime createdDate, String createdBy, LocalDateTime lastUpdate, String lastUpdatedBy, int countryId) {
         this.divisionId = divisionId;
         this.division = division;
         this.createdDate = createdDate;

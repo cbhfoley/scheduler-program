@@ -8,9 +8,11 @@ public class Customer {
     private String phone;
     private String createDate;
     private String createdBy;
+    private String lastUpdate;
+    private String lastUpdatedBy;
     private String divisionId;
 
-    public Customer( int customerId, String customerName, String address, String postalCode, String phone, String createDate, String createdBy, String divisionId){
+    public Customer( int customerId, String customerName, String address, String postalCode, String phone, String createDate, String createdBy, String lastUpdate, String lastUpdatedBy, String divisionId){
         this.customerId = customerId;
         this.customerName = customerName;
         this.address = address;
@@ -18,6 +20,8 @@ public class Customer {
         this.phone = phone;
         this.createDate = createDate;
         this.createdBy = createdBy;
+        this.lastUpdate = lastUpdate;
+        this.lastUpdatedBy = lastUpdatedBy;
         this.divisionId = divisionId;
 
     }
@@ -84,5 +88,21 @@ public class Customer {
 
     public void setDivisionId(String divisionId) {
         this.divisionId = divisionId;
+    }
+
+    public String getLastUpdate() {
+        return lastUpdate;
+    }
+
+    public void setLastUpdate(String lastUpdate) {
+        this.lastUpdate = lastUpdate;
+    }
+
+    public String getLastUpdatedBy() {
+        return lastUpdatedBy;
+    }
+
+    public void setLastUpdatedBy(String lastUpdatedBy) {
+        this.lastUpdatedBy = lastUpdatedBy;
     }
 }

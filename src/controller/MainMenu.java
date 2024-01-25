@@ -25,4 +25,12 @@ public class MainMenu {
         stage.setScene(scene);
         stage.show();
     }
+
+    public void signOutButtonAction(ActionEvent actionEvent) throws IOException {
+        Parent parent = FXMLLoader.load(getClass().getResource("/view/login.fxml"));
+        Scene scene = new Scene(parent);
+        Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+        stage.setScene(scene);
+        stage.show();
+    }
 }

@@ -9,7 +9,7 @@ import javafx.stage.Stage;
 
 
 public class Main extends Application {
-    //Second Commit
+    //Third Commit
     @Override
     public void start(Stage stage) throws Exception {
 
@@ -25,6 +25,5 @@ public class Main extends Application {
         JDBC.openConnection();
         launch(args);
         JDBC.closeConnection();
-
     }
 }

@@ -16,10 +16,10 @@ public class Appointments {
     private int userId;
     private int contactId;
 
-    public Appointments(int apptId, String title, String description, String location, String type, String start, String end, String createDate, String createdBy, String lastUpdate, String lastUpdatedBy, int customerId, int userId, int contactId){
+    public Appointments(int apptId, String title, String description, String location, String type, String start, String end, String createDate, String createdBy, String lastUpdate, String lastUpdatedBy, int customerId, int userId, int contactId) {
         this.apptId = apptId;
         this.title = title;
-        this. description = description;
+        this.description = description;
         this.location = location;
         this.type = type;
         this.start = start;
@@ -30,7 +30,7 @@ public class Appointments {
         this.lastUpdatedBy = lastUpdatedBy;
         this.customerId = customerId;
         this.userId = userId;
-        this. contactId = contactId;
+        this.contactId = contactId;
     }
 
 

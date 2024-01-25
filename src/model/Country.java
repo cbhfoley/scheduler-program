@@ -10,10 +10,10 @@ public class Country {
     private LocalDateTime lastUpdate;
     private String lastUpdatedBy;
 
-    public Country(int countryId, String country, LocalDateTime createdDate, String createdBy, LocalDateTime lastUpdate, String lastUpdatedBy){
+    public Country(int countryId, String country, LocalDateTime createdDate, String createdBy, LocalDateTime lastUpdate, String lastUpdatedBy) {
         this.countryId = countryId;
         this.country = country;
-        this. createdDate = createdDate;
+        this.createdDate = createdDate;
         this.createdBy = createdBy;
         this.lastUpdate = lastUpdate;
         this.lastUpdatedBy = lastUpdatedBy;

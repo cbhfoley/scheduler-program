@@ -15,9 +15,9 @@ public class CountryDAO {
         String query = "SELECT Country FROM countries";
 
         try (PreparedStatement statement = JDBC.connection.prepareStatement(query);
-        ResultSet resultSet = statement.executeQuery()) {
+             ResultSet resultSet = statement.executeQuery()) {
 
-            while (resultSet.next()){
+            while (resultSet.next()) {
                 countryNames.add(resultSet.getString("Country"));
             }
         }

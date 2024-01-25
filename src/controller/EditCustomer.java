@@ -34,16 +34,14 @@ public class EditCustomer {
         loadCountriesData();
 
         // Loads divisions based on which country is selected into the second combo box
-        countryComboBox.getSelectionModel().selectedItemProperty().addListener(
-                (observable, oldValue, newValue) -> {
-                    try {
-                        loadDivisionsData(newValue);
-                    } catch (SQLException e) {
-                        e.printStackTrace();
-                    }
+        countryComboBox.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+            try {
+                loadDivisionsData(newValue);
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
 
-                }
-        );
+        });
     }
 
     private void loadCountriesData() throws SQLException {
