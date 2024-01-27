@@ -8,24 +8,35 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class UserDAO {
+    /** Method to validate login. It accepts the entered in username and password from the "login" view and returns
+     * true/false depending on the user input
+     *
+     * ******** IT'S CURRENTLY NOT WORKING AS INTENDED.
+     *
+     * @param userName
+     * @param password
+     * @return
+     */
     public boolean validateLogin(String userName, String password) {
-        String query = "SELECT * FROM users WHERE User_Name = ? AND Password = ?";
-        boolean isValid = false;
 
-        try (Connection connection = JDBC.connection;
-             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+
+
+        String query = "SELECT * FROM users WHERE User_Name = ? AND Password = ?";
+        try {Connection connection = JDBC.connection;
+             PreparedStatement preparedStatement = connection.prepareStatement(query);
 
             preparedStatement.setString(1, userName);
             preparedStatement.setString(2, password);
 
-            try (ResultSet resultSet = preparedStatement.executeQuery()) {
-                isValid = resultSet.next();
-            }
+            ResultSet resultSet = preparedStatement.executeQuery();
+                return resultSet.next();
+
 
         } catch (SQLException e) {
             e.printStackTrace();
+            return false;
         }
-        return isValid;
+
     }
 }
 

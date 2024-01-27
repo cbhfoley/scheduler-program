@@ -15,6 +15,13 @@ import static helper.JDBC.connection;
 
 public class CustomerDAO {
 
+    /**
+     * Method to create a list of all the customers that are in the SQL database. It executes an SQL query to retrieve
+     * all the customer information. It displays the division as plain text as opposed to the division ID.
+     *
+     * @return
+     * @throws SQLException
+     */
     public ObservableList<Customer> getAllCustomers() throws SQLException {
         ObservableList<Customer> customers = FXCollections.observableArrayList();
         String query = "SELECT customers.*, first_level_divisions.Division " +
@@ -43,6 +50,16 @@ public class CustomerDAO {
         return customers;
     }
 
+    /**
+     * Method to add a customer based on user input information. It accepts a Customer created via the Customer model
+     * and executes an SQL statement to add it to the database.
+     *
+     * **** CURRENTLY SOME OF THE CUSTOMER INFORMATION IS MANUALLY FED INTO THIS STATEMENT will add a fix for as the
+     * program develops.
+     *
+     * @param customer
+     * @throws SQLException
+     */
     public void addCustomer(Customer customer) throws SQLException {
         String query = "INSERT INTO customers (Customer_Name, Address, Postal_Code, Phone, Create_Date, Created_By, Last_Update, Last_Updated_By, Division_ID) " +
                 "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";

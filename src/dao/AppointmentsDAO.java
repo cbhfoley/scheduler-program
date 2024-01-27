@@ -11,6 +11,13 @@ import java.sql.SQLException;
 
 public class AppointmentsDAO {
 
+    /**
+     * Method to create a list of all the appointments that are in the SQL database. It executes an SQL query to retrieve
+     * all the appointment information.
+     *
+     * @return
+     * @throws SQLException
+     */
     public ObservableList<Appointments> getAllAppointments() throws SQLException {
         ObservableList<Appointments> appointment = FXCollections.observableArrayList();
         String query = "SELECT * FROM Appointments";

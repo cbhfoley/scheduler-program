@@ -1,7 +1,6 @@
 package controller;
 
 import dao.UserDAO;
-import helper.JDBC;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -24,6 +23,7 @@ public class Login implements Initializable {
     private TextField usernameTextField;
     @FXML
     private PasswordField passwordPasswordField;
+    private static String username;
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
     }
@@ -38,10 +38,12 @@ public class Login implements Initializable {
         String enteredPassword = passwordPasswordField.getText();
 
         UserDAO userDAO = new UserDAO();
+
         boolean isValidLogin = userDAO.validateLogin(enteredUsername, enteredPassword);
-        //boolean isValidLogin = true;
+
 
         if (isValidLogin) {
+            setUsername(enteredUsername);
             Parent parent = FXMLLoader.load(getClass().getResource("/view/mainMenu.fxml"));
             Scene scene = new Scene(parent);
             Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
@@ -51,11 +53,15 @@ public class Login implements Initializable {
             alertDisplay(1);
             usernameTextField.clear();
             passwordPasswordField.clear();
-
         }
+    }
 
+    public void setUsername(String username){
+        this.username = username;
+    }
 
-
+    public String getUsername(){
+        return username;
     }
 
     private void alertDisplay(int alertType) {

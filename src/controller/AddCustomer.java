@@ -28,7 +28,7 @@ public class AddCustomer {
     @FXML
     private ComboBox<String> divisionComboBox;
     @FXML
-    private Button saveButton;
+    private TextField createdByTextField;
     @FXML
     private TextField customerNameTextField;
     @FXML
@@ -37,6 +37,7 @@ public class AddCustomer {
     private TextField customerAddressTextField;
     @FXML
     private TextField customerPostalTextField;
+    private String username;
 
     private CountryDAO countryDAO;
     private DivisionsDAO divisionsDAO;
@@ -47,6 +48,7 @@ public class AddCustomer {
     public void initialize() throws SQLException {
         countryDAO = new CountryDAO();
         divisionsDAO = new DivisionsDAO();
+        createdByTextField.setPromptText(getLoginUsername());
 
         // Loads countries into the first combo Box
         loadCountriesData();
@@ -83,12 +85,29 @@ public class AddCustomer {
         stage.show();
     }
 
+    public void setUsername(String usename){
+        this.username = username;
+    }
+
+    private String getLoginUsername() {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/login.fxml"));
+        try {
+            Parent parent = loader.load();
+            Login loginController = loader.getController();
+            return loginController.getUsername();
+        } catch (IOException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
     public void saveButtonAction(ActionEvent actionEvent) throws IOException, SQLException {
         String customerName = customerNameTextField.getText();
         String phone = customerPhoneTextField.getText();
         String address = customerAddressTextField.getText();
         String postalCode = customerPostalTextField.getText();
         String division = divisionComboBox.getValue();
+        String user = getLoginUsername();
 
         String time = getCurrentTimestamp();
         int divisionId = divisionsDAO.getDivisionIdByName(division);
@@ -98,12 +117,15 @@ public class AddCustomer {
         if (customerName.isEmpty() || phone.isEmpty() || address.isEmpty() || postalCode.isEmpty() || division == null) {
             alertDisplay(1);
         } else {
-
-
-            Customer customer = new Customer(1, customerName, address, postalCode, phone, time, "Chad", time, "Chad", divisionIdString);
-
-
+            Customer customer = new Customer(1, customerName, address, postalCode, phone, time, user, time, user, divisionIdString);
+            
             customerDAO.addCustomer(customer);
+
+            Parent parent = FXMLLoader.load(getClass().getResource("/view/customerMenu.fxml"));
+            Scene scene = new Scene(parent);
+            Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+            stage.setScene(scene);
+            stage.show();
         }
     }
 

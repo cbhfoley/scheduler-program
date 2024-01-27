@@ -30,8 +30,8 @@
       <TextField fx:id="customerAddressTextField" layoutX="205.0" layoutY="165.0" />
       <TextField fx:id="customerPostalTextField" layoutX="205.0" layoutY="197.0" />
       <TextField editable="false" layoutX="205.0" layoutY="232.0" promptText="Auto Generated" />
-      <ComboBox layoutX="205.0" layoutY="264.0" prefWidth="150.0" />
       <Button layoutX="179.0" layoutY="376.0" mnemonicParsing="false" onAction="#exitButtonAction" text="Cancel" />
       <Button fx:id="saveButton" layoutX="434.0" layoutY="376.0" mnemonicParsing="false" onAction="#saveButtonAction" text="Save" />
+      <TextField fx:id="createdByTextField" editable="false" layoutX="205.0" layoutY="264.0" />
    </children>
 </AnchorPane>

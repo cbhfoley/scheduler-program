@@ -10,6 +10,15 @@ import java.sql.SQLException;
 
 
 public class DivisionsDAO {
+    /**
+     * Method to create a list of the divisions corresponding to the selected country. There are 3 countries and when
+     * one is selected it returns a list of all divisions associating with the country ID.
+     *
+     * @param selectedCountry
+     * @return
+     * @throws SQLException
+     */
+
     public ObservableList<String> getDivisionByCountry(String selectedCountry) throws SQLException {
         ObservableList<String> divisions = FXCollections.observableArrayList();
 
@@ -31,6 +40,16 @@ public class DivisionsDAO {
         return divisions;
     }
 
+    /**
+     * Method to retrieve division ID by name. This is so when a customer is added, the selected division is converted
+     * from plain text back into it's division ID. It allows the user to not have to memorize the different division ID's
+     * and what they correspond too (e.g. Alabama's division ID = 1).
+     *
+     *
+     * @param divisionName
+     * @return
+     * @throws SQLException
+     */
     public int getDivisionIdByName(String divisionName) throws SQLException {
         int divisionId = -1; // Default value indicating failure or not found
 
