@@ -57,7 +57,7 @@ public class CustomerMenu {
         zipcodeColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getPostalCode()));
         createdDateColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getCreateDate()));
         createdByColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getCreatedBy()));
-        regionColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getDivisionId()));
+        regionColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getDivision()));
 
         loadCustomerData();
     }
@@ -87,14 +87,17 @@ public class CustomerMenu {
     }
 
     public void editCustomerButtonAction(ActionEvent actionEvent) throws IOException {
-
         Customer customerToEdit = customerTableView.getSelectionModel().getSelectedItem();
-
         if (customerToEdit == null) {
             alertDisplay((1));
         } else {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/editCustomer.fxml"));
+            Parent parent = loader.load();
 
-            Parent parent = FXMLLoader.load(getClass().getResource("/view/editCustomer.fxml"));
+            // Get the controller instance and pass the selected customer
+            EditCustomer editCustomerController = loader.getController();
+            editCustomerController.setCustomerToEdit(customerToEdit);
+
             Scene scene = new Scene(parent);
             Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
             stage.setScene(scene);

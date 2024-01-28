@@ -74,9 +74,29 @@ public class CustomerDAO {
             preparedStatement.setString(6, customer.getCreatedBy());
             preparedStatement.setString(7, customer.getLastUpdate());
             preparedStatement.setString(8, customer.getLastUpdatedBy());
-            preparedStatement.setString(9, customer.getDivisionId());
+            preparedStatement.setString(9, customer.getDivision());
 
             preparedStatement.executeUpdate();
         }
     }
+
+    public void updateCustomer(int customerId, Customer updatedCustomer) throws SQLException {
+        String query = "UPDATE customers " +
+                "SET Customer_Name = ?, Address = ?, Postal_Code = ?, Phone = ?, " +
+                "Last_Update = ?, Last_Updated_By = ?, Division_ID = ? " +
+                "WHERE Customer_ID = ?";
+
+        try (PreparedStatement statement = connection.prepareStatement(query)) {
+            statement.setString(1, updatedCustomer.getCustomerName());
+            statement.setString(2, updatedCustomer.getAddress());
+            statement.setString(3, updatedCustomer.getPostalCode());
+            statement.setString(4, updatedCustomer.getPhone());
+            statement.setString(5, updatedCustomer.getLastUpdate());
+            statement.setString(6, updatedCustomer.getLastUpdatedBy());
+            statement.setString(7, updatedCustomer.getDivision());
+            statement.setInt(8, customerId);
+
+            statement.executeUpdate();
+            }
+        }
 }

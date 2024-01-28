@@ -9,26 +9,26 @@
 
 <AnchorPane prefHeight="800.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.Login">
    <children>
-      <Button layoutX="206.0" layoutY="445.0" mnemonicParsing="false" onAction="#exitButtonAction" text="Exit" />
-      <Button layoutX="326.0" layoutY="445.0" mnemonicParsing="false" onAction="#loginButtonAction" text="Login" />
-      <Label layoutX="139.0" layoutY="304.0" text="Username">
+      <Button fx:id="exitButton" layoutX="206.0" layoutY="445.0" mnemonicParsing="false" onAction="#exitButtonAction" text="Exit" />
+      <Button fx:id="loginButton" layoutX="326.0" layoutY="445.0" mnemonicParsing="false" onAction="#loginButtonAction" text="Login" />
+      <Label fx:id="usernameLabel" layoutX="139.0" layoutY="304.0" text="Username">
          <font>
             <Font size="15.0" />
          </font>
       </Label>
-      <Label layoutX="115.0" layoutY="45.0" text="Scheduler Login">
+      <Label fx:id="headerLabel" alignment="CENTER" layoutX="-4.0" layoutY="127.0" prefHeight="83.0" prefWidth="606.0" text="Scheduler Login" textAlignment="CENTER" wrapText="true">
          <font>
-            <Font size="56.0" />
+            <Font size="36.0" />
          </font>
       </Label>
       <TextField fx:id="usernameTextField" layoutX="313.0" layoutY="302.0" />
-      <Label layoutX="139.0" layoutY="364.0" text="Password">
+      <Label fx:id="passwordLabel" layoutX="139.0" layoutY="364.0" text="Password">
          <font>
             <Font size="15.0" />
          </font>
       </Label>
-      <Label layoutX="173.0" layoutY="550.0" text="Region" />
-      <Label layoutX="326.0" layoutY="550.0" text="REGION UPDATED " />
+      <Label fx:id="regionTextLabel" layoutX="173.0" layoutY="550.0" text="Region" />
+      <Label fx:id="regionLabel" layoutX="326.0" layoutY="550.0" text="REGION UPDATED " />
       <PasswordField fx:id="passwordPasswordField" layoutX="313.0" layoutY="362.0" />
    </children>
 </AnchorPane>

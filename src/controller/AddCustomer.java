@@ -120,7 +120,7 @@ public class AddCustomer {
             Customer customer = new Customer(1, customerName, address, postalCode, phone, time, user, time, user, divisionIdString);
             
             customerDAO.addCustomer(customer);
-
+            alertDisplay(2);
             Parent parent = FXMLLoader.load(getClass().getResource("/view/customerMenu.fxml"));
             Scene scene = new Scene(parent);
             Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
@@ -128,6 +128,7 @@ public class AddCustomer {
             stage.show();
         }
     }
+
 
     // Temporarily here?
     private String getCurrentTimestamp() {
@@ -143,9 +144,14 @@ public class AddCustomer {
             case 1 -> {
                 alert.setTitle("Error");
                 alert.setHeaderText("Action invalid");
-                alert.setContentText("Please enter text in all fields.");
+                alert.setContentText("Please enter text in ALL fields and select a country and region.");
                 alert.showAndWait();
-
+            }
+            case 2 -> {
+                alert.setTitle("Saved");
+                alert.setHeaderText("Customer Saved");
+                alert.setContentText("Press OK to continue.");
+                alert.showAndWait();
             }
         }
     }

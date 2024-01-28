@@ -7,17 +7,21 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="501cbc56-7a06-46f9-b02c-818bbbf67cd8" name="Changes" comment="Task 1-Third Commit">
+    <list default="true" id="501cbc56-7a06-46f9-b02c-818bbbf67cd8" name="Changes" comment="Task 1-Fourth Commit">
+      <change afterPath="$PROJECT_DIR$/src/resources/language.properties" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/resources/language_fr.properties" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/controller/AddCustomer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/controller/AddCustomer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/controller/CustomerMenu.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/controller/CustomerMenu.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/controller/EditCustomer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/controller/EditCustomer.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/controller/Login.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/controller/Login.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/dao/AppointmentsDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/dao/AppointmentsDAO.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/dao/CountryDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/dao/CountryDAO.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/dao/CustomerDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/dao/CustomerDAO.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/dao/DivisionsDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/dao/DivisionsDAO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/dao/UserDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/dao/UserDAO.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/view/addCustomer.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/view/addCustomer.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/model/Customer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/model/Customer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/view/editCustomer.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/view/editCustomer.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/view/login.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/view/login.fxml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -45,19 +49,19 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/LabUser/IdeaProjects/C195_Project&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;Libraries&quot;,
-    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
-    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
-    &quot;run.code.analysis.last.selected.profile&quot;: &quot;pProject Default&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.lookFeel&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "ignore.virus.scanning.warn.message": "true",
+    "last_opened_file_path": "C:/Users/LabUser/IdeaProjects/C195_Project",
+    "project.structure.last.edited": "Project",
+    "project.structure.proportion": "0.15",
+    "project.structure.side.proportion": "0.2",
+    "run.code.analysis.last.selected.profile": "pProject Default",
+    "settings.editor.selected.configurable": "preferences.lookFeel"
   }
-}</component>
+}]]></component>
   <component name="RunManager">
     <configuration name="C195_Project" type="Application" factoryName="Application" singleton="false">
       <option name="MAIN_CLASS_NAME" value="main.Main" />
@@ -101,7 +105,15 @@
       <option name="project" value="LOCAL" />
       <updated>1706167827538</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="Task 1-Fourth Commit">
+      <option name="closed" value="true" />
+      <created>1706391812173</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1706391812173</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -119,7 +131,8 @@
     <MESSAGE value="Task 1-First Commit" />
     <MESSAGE value="Task 1-Second Commit" />
     <MESSAGE value="Task 1-Third Commit" />
-    <option name="LAST_COMMIT_MESSAGE" value="Task 1-Third Commit" />
+    <MESSAGE value="Task 1-Fourth Commit" />
+    <option name="LAST_COMMIT_MESSAGE" value="Task 1-Fourth Commit" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/C195_Project$C195_Project.ic" NAME="C195_Project Coverage Results" MODIFIED="1706213176078" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />

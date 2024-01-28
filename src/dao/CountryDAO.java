@@ -10,6 +10,8 @@ import java.sql.SQLException;
 
 public class CountryDAO {
 
+
+
     /**
      * Method that executes an SQL statement to retrieve all the country names and returns the "Country" column, so it
      * can be displayed for the user.
@@ -56,4 +58,6 @@ public class CountryDAO {
 
         return countryId;
     }
+
+
 }

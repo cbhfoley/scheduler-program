@@ -66,4 +66,22 @@ public class DivisionsDAO {
 
         return divisionId;
     }
+
+    public String getCountryByDivision(String divisionName) throws SQLException {
+        String country = null;
+        int divisionId = getDivisionIdByName(divisionName);
+
+        String query = "SELECT c.Country FROM countries c " +
+                "JOIN first_level_divisions d ON c.Country_ID = d.Country_ID " +
+                "WHERE d.Division_ID = ?";
+        try (PreparedStatement statement = JDBC.connection.prepareStatement(query)) {
+            statement.setInt(1, divisionId);
+            try (ResultSet resultSet = statement.executeQuery()) {
+                if (resultSet.next()) {
+                    country = resultSet.getString("Country");
+                }
+            }
+        }
+        return country;
+    }
 }
