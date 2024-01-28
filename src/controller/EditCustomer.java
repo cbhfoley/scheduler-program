@@ -15,6 +15,7 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import model.Customer;
+import utils.dateTimeUtils;
 
 import java.io.IOException;
 import java.sql.SQLException;
@@ -38,7 +39,6 @@ public class EditCustomer {
     private TextField customerAddressTextField;
     @FXML
     private TextField customerPostalTextField;
-    private String username;
 
     private CountryDAO countryDAO;
     private DivisionsDAO divisionsDAO;
@@ -105,7 +105,7 @@ public class EditCustomer {
         String division = divisionComboBox.getValue();
         String user = getLoginUsername();
 
-        String time = getCurrentTimestamp();
+        String time = dateTimeUtils.getCurrentTimestamp();
         int divisionId = divisionsDAO.getDivisionIdByName(division);
         String divisionIdString = String.valueOf(divisionId);
 
@@ -123,12 +123,6 @@ public class EditCustomer {
             stage.setScene(scene);
             stage.show();
         }
-    }
-
-    private String getCurrentTimestamp() {
-        LocalDateTime now = LocalDateTime.now();
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-        return now.format(formatter);
     }
 
     private void alertDisplay(int alertType) {

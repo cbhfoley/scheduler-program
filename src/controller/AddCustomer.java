@@ -16,6 +16,7 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import model.Customer;
+import utils.dateTimeUtils;
 
 import java.io.IOException;
 import java.sql.SQLException;
@@ -37,12 +38,11 @@ public class AddCustomer {
     private TextField customerAddressTextField;
     @FXML
     private TextField customerPostalTextField;
-    private String username;
 
     private CountryDAO countryDAO;
     private DivisionsDAO divisionsDAO;
 
-    private CustomerDAO customerDAO = new CustomerDAO();
+    private final CustomerDAO customerDAO = new CustomerDAO();
 
     @FXML
     public void initialize() throws SQLException {
@@ -85,14 +85,10 @@ public class AddCustomer {
         stage.show();
     }
 
-    public void setUsername(String usename){
-        this.username = username;
-    }
-
     private String getLoginUsername() {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/login.fxml"));
         try {
-            Parent parent = loader.load();
+            loader.load();
             Login loginController = loader.getController();
             return loginController.getUsername();
         } catch (IOException e) {
@@ -109,7 +105,7 @@ public class AddCustomer {
         String division = divisionComboBox.getValue();
         String user = getLoginUsername();
 
-        String time = getCurrentTimestamp();
+        String time = dateTimeUtils.getCurrentTimestamp();
         int divisionId = divisionsDAO.getDivisionIdByName(division);
         String divisionIdString = String.valueOf(divisionId);
 
@@ -117,7 +113,8 @@ public class AddCustomer {
         if (customerName.isEmpty() || phone.isEmpty() || address.isEmpty() || postalCode.isEmpty() || division == null) {
             alertDisplay(1);
         } else {
-            Customer customer = new Customer(1, customerName, address, postalCode, phone, time, user, time, user, divisionIdString);
+            // Customer ID is set to -1 since the SQL is set to auto-increment by 1 from the last entered customer.
+            Customer customer = new Customer(-1, customerName, address, postalCode, phone, time, user, time, user, divisionIdString);
             
             customerDAO.addCustomer(customer);
             alertDisplay(2);
@@ -127,14 +124,6 @@ public class AddCustomer {
             stage.setScene(scene);
             stage.show();
         }
-    }
-
-
-    // Temporarily here?
-    private String getCurrentTimestamp() {
-        LocalDateTime now = LocalDateTime.now();
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-        return now.format(formatter);
     }
 
     private void alertDisplay(int alertType) {

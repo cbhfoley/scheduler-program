@@ -40,6 +40,7 @@ public class Login implements Initializable {
 
 
     private static String username;
+    private ResourceBundle bundle;
 
 
     @Override
@@ -50,7 +51,7 @@ public class Login implements Initializable {
         updateRegionLabel(region);
 
         // Load the language property files
-        ResourceBundle bundle = ResourceBundle.getBundle("resources.language");
+        bundle = ResourceBundle.getBundle("resources.language");
         applyLanguage(bundle);
     }
 
@@ -70,14 +71,32 @@ public class Login implements Initializable {
 
     }
 
+    /**
+     * Method that updates the label depending on the region used by a users local machine.
+     *
+     * @param region
+     */
     private void updateRegionLabel(String region) {
         regionLabel.setText(region);
     }
 
+    /**
+     * Allows the program to exit by clicking the exit button.
+     *
+     * @param actionEvent
+     */
     public void exitButtonAction(ActionEvent actionEvent) {
         System.exit(0);
     }
 
+    /**
+     * Allows the user to login by validating credentials using the userDAO validateLogin method.
+     * If it returns true, the user is logged in successfully, if incorrect (or no) information is entered,
+     * an error is displayed in either English or French depending on the user's language preferences.
+     *
+     * @param actionEvent
+     * @throws IOException
+     */
     public void loginButtonAction(ActionEvent actionEvent) throws IOException {
 
         String enteredUsername = usernameTextField.getText();
@@ -97,31 +116,44 @@ public class Login implements Initializable {
             stage.setScene(scene);
             stage.show();
         } else {
-            alertDisplay(1);
+            alertDisplay(1, bundle);
             usernameTextField.clear();
             passwordPasswordField.clear();
         }
     }
 
-    public void setUsername(String username){
-        this.username = username;
+    /**
+     * Setter for the username for later use.
+     *
+     * @param username
+     */
+    public void setUsername(String username) {
+        Login.username = username;
     }
 
-    public String getUsername(){
+    /**
+     * Getter for the username for later use.
+     *
+     * @return
+     */
+    public String getUsername() {
         return username;
     }
 
-    private void alertDisplay(int alertType) {
+    /**
+     * Alert displays depending on the error encountered.
+     * In this instance there is only one case.
+     *
+     * @param alertType
+     * @param bundle
+     */
+    private void alertDisplay(int alertType, ResourceBundle bundle) {
         Alert alert = new Alert(Alert.AlertType.ERROR);
-
-        switch (alertType) {
-            case 1 -> {
-                alert.setTitle("Error");
-                alert.setHeaderText("Action invalid");
-                alert.setContentText("Incorrect Login Credentials");
-                alert.showAndWait();
-
-            }
+        if (alertType == 1) {
+            alert.setTitle(bundle.getString("errorTitle"));
+            alert.setHeaderText(bundle.getString("errorHeader"));
+            alert.setContentText(bundle.getString("errorContent"));
+            alert.showAndWait();
         }
     }
 }
