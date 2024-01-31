@@ -6,6 +6,7 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import utils.generalUtils;
 
 import java.io.IOException;
 
@@ -15,6 +16,7 @@ public class MainMenu {
         Scene scene = new Scene(parent);
         Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
         stage.setScene(scene);
+        generalUtils.centerOnScreen(stage);
         stage.show();
     }
 
@@ -23,6 +25,7 @@ public class MainMenu {
         Scene scene = new Scene(parent);
         Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
         stage.setScene(scene);
+        generalUtils.centerOnScreen(stage);
         stage.show();
     }
 

@@ -11,8 +11,8 @@
     <children>
         <ComboBox fx:id="countryComboBox" layoutX="204.0" layoutY="298.0" prefWidth="150.0" />
         <ComboBox fx:id="divisionComboBox" layoutX="385.0" layoutY="298.0" prefWidth="150.0" promptText="Choose a Country" />
-        <Label layoutX="73.0" layoutY="105.0" text="Name (First Last)" />
-        <Label layoutX="74.0" layoutY="136.0" text="Phone" />
+        <Label layoutX="77.0" layoutY="105.0" text="Name (First Last)" />
+        <Label layoutX="77.0" layoutY="136.0" text="Phone" />
         <Label layoutX="311.0" layoutY="33.0" text="EDIT CUSTOMER">
             <font>
                 <Font name="System Bold" size="12.0" />
@@ -23,7 +23,7 @@
         <Label layoutX="74.0" layoutY="201.0" text="Postal Code" />
         <Label layoutX="77.0" layoutY="236.0" text="Edit Date" />
         <Label layoutX="77.0" layoutY="268.0" text="Edited By" />
-        <Label layoutX="79.0" layoutY="302.0" text="Region" />
+        <Label layoutX="77.0" layoutY="302.0" text="Region" />
         <TextField fx:id="customerIdTextField" editable="false" layoutX="205.0" layoutY="69.0" />
         <TextField fx:id="customerNameTextField" layoutX="205.0" layoutY="101.0" />
         <TextField fx:id="customerPhoneTextField" layoutX="205.0" layoutY="132.0" />

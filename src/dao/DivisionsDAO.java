@@ -1,12 +1,13 @@
 package dao;
 
-import helper.JDBC;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+
+import static helper.JDBC.connection;
 
 
 public class DivisionsDAO {
@@ -26,7 +27,7 @@ public class DivisionsDAO {
 
         String query = "SELECT Division FROM first_level_divisions WHERE Country_ID = ?";
 
-        try (PreparedStatement statement = JDBC.connection.prepareStatement(query)) {
+        try (PreparedStatement statement = connection.prepareStatement(query)) {
             statement.setInt(1, countryId);
 
             try (ResultSet resultSet = statement.executeQuery()) {
@@ -54,7 +55,7 @@ public class DivisionsDAO {
         int divisionId = -1; // Default value indicating failure or not found
 
         String query = "SELECT Division_ID FROM first_level_divisions WHERE Division = ?";
-        try (PreparedStatement statement = JDBC.connection.prepareStatement(query)) {
+        try (PreparedStatement statement = connection.prepareStatement(query)) {
             statement.setString(1, divisionName);
 
             try (ResultSet resultSet = statement.executeQuery()) {
@@ -74,7 +75,7 @@ public class DivisionsDAO {
         String query = "SELECT c.Country FROM countries c " +
                 "JOIN first_level_divisions d ON c.Country_ID = d.Country_ID " +
                 "WHERE d.Division_ID = ?";
-        try (PreparedStatement statement = JDBC.connection.prepareStatement(query)) {
+        try (PreparedStatement statement = connection.prepareStatement(query)) {
             statement.setInt(1, divisionId);
             try (ResultSet resultSet = statement.executeQuery()) {
                 if (resultSet.next()) {

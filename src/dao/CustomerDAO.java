@@ -99,4 +99,13 @@ public class CustomerDAO {
             statement.executeUpdate();
             }
         }
+    public void deleteCustomer(int customerId) throws SQLException {
+        String query = "DELETE FROM customers WHERE Customer_ID = ?";
+
+        try (PreparedStatement statement = connection.prepareStatement(query)) {
+            statement.setInt(1, customerId);
+            statement.executeUpdate();
+        }
+    }
+
 }

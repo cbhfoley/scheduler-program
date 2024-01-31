@@ -10,6 +10,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
+import utils.generalUtils;
 
 import java.io.IOException;
 import java.net.URL;
@@ -46,7 +47,7 @@ public class Login implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         // Below code commented out, allows for testing to make sure language is being properly set to French.
-        //Locale.setDefault(new Locale("fr"));
+        // Locale.setDefault(new Locale("fr"));
         String region = TimeZone.getDefault().getID();
         updateRegionLabel(region);
 
@@ -105,7 +106,8 @@ public class Login implements Initializable {
         UserDAO userDAO = new UserDAO();
 
         boolean isValidLogin = userDAO.validateLogin(enteredUsername, enteredPassword);
-        //isValidLogin = true;
+        // Below code allows use w/o validating login each time. Will be commented out or removed for final production.
+        isValidLogin = true;
 
 
         if (isValidLogin) {
@@ -114,6 +116,7 @@ public class Login implements Initializable {
             Scene scene = new Scene(parent);
             Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
             stage.setScene(scene);
+            generalUtils.centerOnScreen(stage);
             stage.show();
         } else {
             alertDisplay(1, bundle);

@@ -159,7 +159,7 @@ public class EditCustomer {
             String customerDivision = customerToEdit.getDivision();
             String customerCountry = divisionsDAO.getCountryByDivision(customerDivision);
 
-            customerIdTextField.setText(String.valueOf(customerId));
+            customerIdTextField.setPromptText(String.valueOf(customerId));
             customerNameTextField.setText(customerName);
             customerPhoneTextField.setText(customerPhone);
             customerAddressTextField.setText(customerAddress);

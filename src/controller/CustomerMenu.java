@@ -11,13 +11,17 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.stage.Stage;
 import model.Customer;
+import utils.generalUtils;
 
+import javax.swing.text.html.Option;
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.Optional;
 
 public class CustomerMenu {
     @FXML
@@ -47,6 +51,8 @@ public class CustomerMenu {
     @FXML
     private TableColumn<Customer, String> regionColumn;
 
+    private Customer selectedCustomer;
+
 
     @FXML
     public void initialize() throws SQLException {
@@ -75,6 +81,7 @@ public class CustomerMenu {
         Scene scene = new Scene(parent);
         Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
         stage.setScene(scene);
+        generalUtils.centerOnScreen(stage);
         stage.show();
     }
 
@@ -86,28 +93,41 @@ public class CustomerMenu {
         stage.show();
     }
 
-    public void editCustomerButtonAction(ActionEvent actionEvent) throws IOException {
-        Customer customerToEdit = customerTableView.getSelectionModel().getSelectedItem();
-        if (customerToEdit == null) {
-            alertDisplay((1));
+    public void editCustomerButtonAction(ActionEvent actionEvent) throws IOException, SQLException {
+        selectedCustomer = customerTableView.getSelectionModel().getSelectedItem();
+        if (selectedCustomer == null) {
+            alertDisplay(1);
         } else {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/editCustomer.fxml"));
             Parent parent = loader.load();
 
             // Get the controller instance and pass the selected customer
             EditCustomer editCustomerController = loader.getController();
-            editCustomerController.setCustomerToEdit(customerToEdit);
+            editCustomerController.setCustomerToEdit(selectedCustomer);
 
             Scene scene = new Scene(parent);
             Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
             stage.setScene(scene);
             stage.show();
         }
-
-
     }
 
-    private void alertDisplay(int alertType) {
+    public void deleteCustomerButtonAction(ActionEvent actionEvent) throws SQLException {
+        selectedCustomer = customerTableView.getSelectionModel().getSelectedItem();
+        if (selectedCustomer == null) {
+            alertDisplay(2);
+        } else {
+            alertDisplay(3);
+        }
+    }
+
+    public void deleteCustomer() throws SQLException {
+        CustomerDAO customerDAO = new CustomerDAO();
+        customerDAO.deleteCustomer(selectedCustomer.getCustomerId());
+        loadCustomerData();
+    }
+
+    private void alertDisplay(int alertType) throws SQLException {
         Alert alert = new Alert(Alert.AlertType.ERROR);
 
         switch (alertType) {
@@ -116,8 +136,26 @@ public class CustomerMenu {
                 alert.setHeaderText("Action invalid");
                 alert.setContentText("Please select a customer to edit.");
                 alert.showAndWait();
+            }
+            case 2 -> {
+                alert.setTitle("Error");
+                alert.setHeaderText("Action invalid");
+                alert.setContentText("Please select a customer to delete.");
+                alert.showAndWait();
 
             }
+            case 3 -> {
+                alert.setTitle("Confirmation");
+                alert.setHeaderText("Deletion Confirmation");
+                alert.setContentText("This will delete all customer records, including appointments. " +
+                        "Are you sure you want to do this?");
+                alert.getButtonTypes().setAll(ButtonType.YES, ButtonType.NO);
+                Optional<ButtonType> result = alert.showAndWait();
+                if (result.isPresent() && result.get() == ButtonType.YES){
+                    deleteCustomer();
+                }
+            }
+
         }
     }
 }

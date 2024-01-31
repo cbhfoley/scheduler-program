@@ -8,6 +8,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import static helper.JDBC.connection;
+
 public class CountryDAO {
 
 
@@ -23,7 +25,7 @@ public class CountryDAO {
         ObservableList<String> countryNames = FXCollections.observableArrayList();
         String query = "SELECT Country FROM countries";
 
-        try (PreparedStatement statement = JDBC.connection.prepareStatement(query);
+        try (PreparedStatement statement = connection.prepareStatement(query);
              ResultSet resultSet = statement.executeQuery()) {
 
             while (resultSet.next()) {
@@ -46,7 +48,7 @@ public class CountryDAO {
         int countryId = -1;
 
         String query = "SELECT Country_ID from countries where Country = ?";
-        try (PreparedStatement statement = JDBC.connection.prepareStatement(query)) {
+        try (PreparedStatement statement = connection.prepareStatement(query)) {
             statement.setString(1, countryName);
 
             try (ResultSet resultSet = statement.executeQuery()) {

@@ -12,15 +12,16 @@
           <TableColumn fx:id="idColumn" prefWidth="75.0" text="ID" />
           <TableColumn fx:id="nameColumn" prefWidth="107.0" text="Name" />
             <TableColumn fx:id="phoneColumn" minWidth="0.0" prefWidth="94.0" text="Phone" />
-            <TableColumn fx:id="addressColumn" prefWidth="162.0" text="Address" />
-            <TableColumn fx:id="zipcodeColumn" prefWidth="66.0" text="Zipcode" />
-            <TableColumn fx:id="createdDateColumn" prefWidth="122.0" text="Created Date" />
-            <TableColumn fx:id="createdByColumn" prefWidth="73.0" text="Created By" />
-            <TableColumn fx:id="regionColumn" prefWidth="82.0" text="Region" />
+            <TableColumn fx:id="addressColumn" prefWidth="117.0" text="Address" />
+            <TableColumn fx:id="zipcodeColumn" prefWidth="77.0" text="Zipcode" />
+            <TableColumn fx:id="createdDateColumn" prefWidth="125.0" text="Created Date" />
+            <TableColumn fx:id="createdByColumn" prefWidth="71.0" text="Created By" />
+            <TableColumn fx:id="regionColumn" prefWidth="115.0" text="Region" />
         </columns>
       </TableView>
       <Button layoutX="755.0" layoutY="468.0" mnemonicParsing="false" onAction="#mainMenuButtonAction" text="Main Menu" />
-      <Button layoutX="301.0" layoutY="468.0" mnemonicParsing="false" onAction="#addCustomerButtonAction" text="Add Customer" />
-      <Button layoutX="516.0" layoutY="468.0" mnemonicParsing="false" onAction="#editCustomerButtonAction" text="Edit Customer" />
+      <Button layoutX="85.0" layoutY="468.0" mnemonicParsing="false" onAction="#addCustomerButtonAction" text="Add Customer" />
+      <Button layoutX="300.0" layoutY="468.0" mnemonicParsing="false" onAction="#editCustomerButtonAction" text="Edit Customer" />
+      <Button layoutX="519.0" layoutY="468.0" mnemonicParsing="false" onAction="#deleteCustomerButtonAction" text="Delete Customer" />
    </children>
 </AnchorPane>
