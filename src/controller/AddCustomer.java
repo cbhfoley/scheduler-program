@@ -16,6 +16,7 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import model.Customer;
+import utils.alertUtils;
 import utils.dateTimeUtils;
 import utils.generalUtils;
 
@@ -23,6 +24,8 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+
+import static utils.generalUtils.getLoginUsername;
 
 public class AddCustomer {
     @FXML
@@ -86,17 +89,7 @@ public class AddCustomer {
         stage.show();
     }
 
-    private String getLoginUsername() {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/login.fxml"));
-        try {
-            loader.load();
-            Login loginController = loader.getController();
-            return loginController.getUsername();
-        } catch (IOException e) {
-            e.printStackTrace();
-            return null;
-        }
-    }
+
 
     public void saveButtonAction(ActionEvent actionEvent) throws IOException, SQLException {
         String customerName = customerNameTextField.getText();
@@ -112,37 +105,18 @@ public class AddCustomer {
 
 
         if (customerName.isEmpty() || phone.isEmpty() || address.isEmpty() || postalCode.isEmpty() || division == null) {
-            alertDisplay(1);
+            alertUtils.alertDisplay(3);
         } else {
             // Customer ID is set to -1 since the SQL is set to auto-increment by 1 from the last entered customer.
             Customer customer = new Customer(-1, customerName, address, postalCode, phone, time, user, time, user, divisionIdString);
             
             customerDAO.addCustomer(customer);
-            alertDisplay(2);
+            alertUtils.alertDisplay(4);
             Parent parent = FXMLLoader.load(getClass().getResource("/view/customerMenu.fxml"));
             Scene scene = new Scene(parent);
             Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
             stage.setScene(scene);
             stage.show();
-        }
-    }
-
-    private void alertDisplay(int alertType) {
-        Alert alert = new Alert(Alert.AlertType.ERROR);
-
-        switch (alertType) {
-            case 1 -> {
-                alert.setTitle("Error");
-                alert.setHeaderText("Action invalid");
-                alert.setContentText("Please enter text in ALL fields and select a country and region.");
-                alert.showAndWait();
-            }
-            case 2 -> {
-                alert.setTitle("Saved");
-                alert.setHeaderText("Customer Saved");
-                alert.setContentText("Press OK to continue.");
-                alert.showAndWait();
-            }
         }
     }
 }

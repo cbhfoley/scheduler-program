@@ -9,6 +9,7 @@
 
 <AnchorPane prefHeight="458.0" prefWidth="711.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.AddCustomer">
    <children>
+      <TextField fx:id="customerNameTextField" layoutX="205.0" layoutY="101.0" />
       <ComboBox fx:id="countryComboBox" layoutX="204.0" layoutY="298.0" prefWidth="150.0" />
       <ComboBox fx:id="divisionComboBox" layoutX="385.0" layoutY="298.0" prefWidth="150.0" promptText="Choose a Country" />
       <Label layoutX="77.0" layoutY="105.0" text="Name (First Last)" />
@@ -25,7 +26,6 @@
       <Label layoutX="77.0" layoutY="268.0" text="Created By" />
       <Label layoutX="77.0" layoutY="302.0" text="Region" />
       <TextField editable="false" layoutX="205.0" layoutY="69.0" promptText="Auto Generated" />
-      <TextField fx:id="customerNameTextField" layoutX="205.0" layoutY="101.0" />
       <TextField fx:id="customerPhoneTextField" layoutX="205.0" layoutY="132.0" />
       <TextField fx:id="customerAddressTextField" layoutX="205.0" layoutY="165.0" />
       <TextField fx:id="customerPostalTextField" layoutX="205.0" layoutY="197.0" />

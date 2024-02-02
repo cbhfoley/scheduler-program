@@ -16,6 +16,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.stage.Stage;
 import model.Customer;
+import utils.alertUtils;
 import utils.generalUtils;
 
 import javax.swing.text.html.Option;
@@ -52,6 +53,7 @@ public class CustomerMenu {
     private TableColumn<Customer, String> regionColumn;
 
     private Customer selectedCustomer;
+    private Boolean confirmed = false;
 
 
     @FXML
@@ -96,7 +98,7 @@ public class CustomerMenu {
     public void editCustomerButtonAction(ActionEvent actionEvent) throws IOException, SQLException {
         selectedCustomer = customerTableView.getSelectionModel().getSelectedItem();
         if (selectedCustomer == null) {
-            alertDisplay(1);
+            alertUtils.alertDisplay(5);
         } else {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/editCustomer.fxml"));
             Parent parent = loader.load();
@@ -115,9 +117,19 @@ public class CustomerMenu {
     public void deleteCustomerButtonAction(ActionEvent actionEvent) throws SQLException {
         selectedCustomer = customerTableView.getSelectionModel().getSelectedItem();
         if (selectedCustomer == null) {
-            alertDisplay(2);
+            alertUtils.alertDisplay(6);
         } else {
-            alertDisplay(3);
+            // Try to find solution to place the below code within the alertUtils class, if not, it works as intended.
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Confirmation");
+            alert.setHeaderText("Deletion Confirmation");
+            alert.setContentText("This will delete all customer records, including appointments. " +
+                    "Are you sure you want to do this?");
+            alert.getButtonTypes().setAll(ButtonType.YES, ButtonType.NO);
+            Optional<ButtonType> result = alert.showAndWait();
+            if (result.orElse(ButtonType.NO) == ButtonType.YES){
+                deleteCustomer();
+            }
         }
     }
 
@@ -125,37 +137,5 @@ public class CustomerMenu {
         CustomerDAO customerDAO = new CustomerDAO();
         customerDAO.deleteCustomer(selectedCustomer.getCustomerId());
         loadCustomerData();
-    }
-
-    private void alertDisplay(int alertType) throws SQLException {
-        Alert alert = new Alert(Alert.AlertType.ERROR);
-
-        switch (alertType) {
-            case 1 -> {
-                alert.setTitle("Error");
-                alert.setHeaderText("Action invalid");
-                alert.setContentText("Please select a customer to edit.");
-                alert.showAndWait();
-            }
-            case 2 -> {
-                alert.setTitle("Error");
-                alert.setHeaderText("Action invalid");
-                alert.setContentText("Please select a customer to delete.");
-                alert.showAndWait();
-
-            }
-            case 3 -> {
-                alert.setTitle("Confirmation");
-                alert.setHeaderText("Deletion Confirmation");
-                alert.setContentText("This will delete all customer records, including appointments. " +
-                        "Are you sure you want to do this?");
-                alert.getButtonTypes().setAll(ButtonType.YES, ButtonType.NO);
-                Optional<ButtonType> result = alert.showAndWait();
-                if (result.isPresent() && result.get() == ButtonType.YES){
-                    deleteCustomer();
-                }
-            }
-
-        }
     }
 }

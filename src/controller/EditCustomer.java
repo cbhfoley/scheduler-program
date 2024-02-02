@@ -15,6 +15,7 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import model.Customer;
+import utils.alertUtils;
 import utils.dateTimeUtils;
 
 import java.io.IOException;
@@ -111,36 +112,17 @@ public class EditCustomer {
 
 
         if (customerName.isEmpty() || phone.isEmpty() || address.isEmpty() || postalCode.isEmpty() || division == null) {
-            alertDisplay(1);
+            alertUtils.alertDisplay(7);
         } else {
             Customer customer = new Customer(customerToEdit.getCustomerId(), customerName, address, postalCode, phone, time, user, time, user, divisionIdString);
 
             customerDAO.updateCustomer(customerToEdit.getCustomerId(), customer);
-            alertDisplay(2);
+            alertUtils.alertDisplay(8);
             Parent parent = FXMLLoader.load(getClass().getResource("/view/customerMenu.fxml"));
             Scene scene = new Scene(parent);
             Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
             stage.setScene(scene);
             stage.show();
-        }
-    }
-
-    private void alertDisplay(int alertType) {
-        Alert alert = new Alert(Alert.AlertType.ERROR);
-
-        switch (alertType) {
-            case 1 -> {
-                alert.setTitle("Error");
-                alert.setHeaderText("Action invalid");
-                alert.setContentText("Please enter text in all fields.");
-                alert.showAndWait();
-            }
-            case 2 -> {
-                alert.setTitle("Updated");
-                alert.setHeaderText("Customer Updated");
-                alert.setContentText("Press OK to continue.");
-                alert.showAndWait();
-            }
         }
     }
 
