@@ -21,7 +21,7 @@
             <TableColumn fx:id="endColumn" minWidth="0.0" prefWidth="141.0" text="End" />
             <TableColumn fx:id="custIdColumn" prefWidth="73.0" text="Cust. ID" />
             <TableColumn fx:id="userIdColumn" prefWidth="52.0" text="User ID" />
-            <TableColumn fx:id="contactColumn" prefWidth="163.0" text="Contact ID" />
+            <TableColumn fx:id="contactColumn" prefWidth="163.0" text="Contact" />
         </columns>
       </TableView>
       <Button layoutX="972.0" layoutY="498.0" mnemonicParsing="false" onAction="#mainMenuButtonAction" text="Main Menu" />

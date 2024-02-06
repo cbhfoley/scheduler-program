@@ -2,6 +2,7 @@ package controller;
 
 import dao.AppointmentsDAO;
 import dao.ContactsDAO;
+import dao.CustomerDAO;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -19,6 +20,7 @@ import utils.alertUtils;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.time.LocalDate;
+import java.util.Objects;
 
 
 public class AddAppointment {
@@ -27,7 +29,7 @@ public class AddAppointment {
     @FXML
     private DatePicker endDatePicker;
     @FXML
-    private TextArea descriptionTextArea;
+    private TextField descriptionTextField;
     @FXML
     private TextField titleTextField;
     @FXML
@@ -41,23 +43,30 @@ public class AddAppointment {
     @FXML
     private ComboBox<String> endTimeComboBox;
     @FXML
-    private TextField customerIdTextField;
-    @FXML
-    private TextField userIdTextField;
+    private ComboBox<String> customerIdComboBox;
+
     private ContactsDAO contactsDAO;
+    private CustomerDAO customerDAO;
 
     @FXML
     private void initialize() throws SQLException {
         contactsDAO = new ContactsDAO();
+        customerDAO = new CustomerDAO();
         loadContactsData();
         populateTimeComboBoxes();
+        populateCustomerComboBox();
 
         // Sets the end date DatePicker to the value of the start date DatePicker.
         // The only scenario where the start and end date would be different would be if an appointment was scheduled
-        // an appointment from a time zone that was within business hours, but it was near midnight.
+        // in a time zone that was within business hours, but it overlapped at midnight in the local users' timezone.
         startDatePicker.valueProperty().addListener((observable, oldValue, newValue) -> {
-            endDatePicker.setValue(newValue); // Set endDatePicker to the selected date of startDatePicker
+            endDatePicker.setValue(newValue);
         });
+    }
+
+    private void populateCustomerComboBox() throws SQLException {
+        ObservableList<String> customerNames = customerDAO.getAllCustomerNames();
+        customerIdComboBox.setItems(customerNames);
     }
 
     private void loadContactsData() throws SQLException {
@@ -68,7 +77,7 @@ public class AddAppointment {
     private void populateTimeComboBoxes() {
         for (int hour = 0; hour <24; hour++) {
             for (int minute = 0; minute <60; minute += 15) {
-                String formattedTime = String.format("%02d;%02d", hour,minute);
+                String formattedTime = String.format("%02d:%02d", hour,minute);
                 startTimeComboBox.getItems().add(formattedTime);
                 endTimeComboBox.getItems().add(formattedTime);
             }
@@ -86,24 +95,39 @@ public class AddAppointment {
 
     public void saveButtonAction(ActionEvent actionEvent) throws SQLException, IOException {
         String title = titleTextField.getText();
-        String description = descriptionTextArea.getText();
+        String description = descriptionTextField.getText();
         String location = locationTextField.getText();
         String type = typeTextField.getText();
+        String customer = customerIdComboBox.getValue();
+        String contact = contactComboBox.getValue();
+        LocalDate selectedStartDate = startDatePicker.getValue();
+        LocalDate selectedEndDate = endDatePicker.getValue();
+        String startTime = startTimeComboBox.getValue();
+        String endTime = endTimeComboBox.getValue();
 
-        LocalDate selectedStart = startDatePicker.getValue();
-
-        // Figure out the start/end times, for testing purposes will just use current timestamp
-        String user = generalUtils.getLoginUsername();
-        String currentTime = dateTimeUtils.getCurrentTimestamp();
-        int customerId = Integer.parseInt(customerIdTextField.getText());
-        int userId = Integer.parseInt(userIdTextField.getText());
-        String contactId = "1"; // Will need to add some methods to the corresponding DAO to turn the combo box contact
-        //name into the corresponding int, similar to the division I did for customer.
-
-        if (title.isEmpty() || description.isEmpty() || location.isEmpty() || type.isEmpty()) {
+        if (title.isEmpty() || description.isEmpty() || location.isEmpty() || type.isEmpty()  || customer == null
+                || contact == null || selectedStartDate == null || selectedEndDate == null || startTime == null ||endTime == null) {
             alertUtils.alertDisplay(1);
-        } else {
-            Appointments appointment = new Appointments(-1, title, description, location, type, currentTime, currentTime, currentTime, user, currentTime, user, customerId, userId, contactId);
+            return;
+        }
+        if (!dateTimeUtils.isStartBeforeEnd(selectedStartDate, startTime, selectedEndDate, endTime)) {
+            alertUtils.alertDisplay(9);
+            return;
+        }
+        if (!dateTimeUtils.isWithinBusinessHours(selectedStartDate, startTime, selectedEndDate, endTime)) {
+            alertUtils.alertDisplay(10);
+        }
+        else {
+            int customerId = customerDAO.getCustomerIdByName(customer);
+            int contactId = contactsDAO.getContactIdByName(contact);
+            String contactIdString = String.valueOf(contactId);
+            String startTimeStamp = dateTimeUtils.convertToUTC(dateTimeUtils.combineDateTime(selectedStartDate, startTime));
+            String endTimeStamp = dateTimeUtils.convertToUTC(dateTimeUtils.combineDateTime(selectedEndDate, endTime));
+            String user = generalUtils.getLoginUsername();
+            String localTimeStamp = dateTimeUtils.getCurrentTimestamp();
+            String utcTimeStamp = dateTimeUtils.convertToUTC(localTimeStamp);
+
+            Appointments appointment = new Appointments(-1, title, description, location, type, startTimeStamp, endTimeStamp, utcTimeStamp, user, utcTimeStamp, user, customerId, 1, contactIdString);
 
             AppointmentsDAO.addAppointment(appointment);
             alertUtils.alertDisplay(2);
@@ -111,6 +135,7 @@ public class AddAppointment {
             Scene scene = new Scene(parent);
             Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
             stage.setScene(scene);
+            generalUtils.centerOnScreen(stage);
             stage.show();
         }
 

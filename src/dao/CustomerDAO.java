@@ -54,9 +54,6 @@ public class CustomerDAO {
      * Method to add a customer based on user input information. It accepts a Customer created via the Customer model
      * and executes an SQL statement to add it to the database.
      *
-     * **** CURRENTLY SOME OF THE CUSTOMER INFORMATION IS MANUALLY FED INTO THIS STATEMENT will add a fix for as the
-     * program develops.
-     *
      * @param customer
      * @throws SQLException
      */
@@ -108,4 +105,35 @@ public class CustomerDAO {
         }
     }
 
+    public ObservableList<String> getAllCustomerNames() throws SQLException {
+        ObservableList<String> CustomerNames = FXCollections.observableArrayList();
+
+        String query = "SELECT * FROM customers";
+
+        try (PreparedStatement statement = connection.prepareStatement(query);
+             ResultSet resultSet = statement.executeQuery()) {
+
+            while (resultSet.next()) {
+                CustomerNames.add(resultSet.getString("Customer_Name"));
+            }
+        }
+        return CustomerNames;
+    }
+
+    public int getCustomerIdByName(String customer) throws SQLException {
+        int customerId = -1;
+
+        String query = "SELECT Customer_ID FROM customers WHERE Customer_Name = ?";
+
+        try (PreparedStatement statement = connection.prepareStatement(query)) {
+            statement.setString(1, customer);
+
+            try (ResultSet resultSet = statement.executeQuery()) {
+                if (resultSet.next()) {
+                    customerId = resultSet.getInt("Customer_ID");
+                }
+            }
+        }
+        return customerId;
+    }
 }

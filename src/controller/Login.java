@@ -146,7 +146,7 @@ public class Login implements Initializable {
     /**
      * Alert displays depending on the error encountered.
      * In this instance there is only one case.
-     * This could be added to alertUtils, but I decided to leave it here since I created my alertUtils fairly late
+     * This could be added to alertUtils. I decided to leave it here since I created my alertUtils fairly late
      * into development.
      *
      * @param alertType

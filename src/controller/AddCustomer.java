@@ -99,7 +99,10 @@ public class AddCustomer {
         String division = divisionComboBox.getValue();
         String user = getLoginUsername();
 
-        String time = dateTimeUtils.getCurrentTimestamp();
+        String localTimestamp = dateTimeUtils.getCurrentTimestamp();
+        String utcTimeStamp = dateTimeUtils.convertToUTC(localTimestamp);
+
+
         int divisionId = divisionsDAO.getDivisionIdByName(division);
         String divisionIdString = String.valueOf(divisionId);
 
@@ -108,7 +111,7 @@ public class AddCustomer {
             alertUtils.alertDisplay(3);
         } else {
             // Customer ID is set to -1 since the SQL is set to auto-increment by 1 from the last entered customer.
-            Customer customer = new Customer(-1, customerName, address, postalCode, phone, time, user, time, user, divisionIdString);
+            Customer customer = new Customer(-1, customerName, address, postalCode, phone, utcTimeStamp, user, utcTimeStamp, user, divisionIdString);
             
             customerDAO.addCustomer(customer);
             alertUtils.alertDisplay(4);

@@ -17,6 +17,7 @@ import javafx.scene.control.TableView;
 import javafx.stage.Stage;
 import model.Customer;
 import utils.alertUtils;
+import utils.dateTimeUtils;
 import utils.generalUtils;
 
 import javax.swing.text.html.Option;
@@ -70,9 +71,17 @@ public class CustomerMenu {
         loadCustomerData();
     }
 
+    private String convertToLocal(String utcTimestamp) {
+        return dateTimeUtils.convertToLocal(utcTimestamp);
+    }
+
     private void loadCustomerData() throws SQLException {
         CustomerDAO customerDAO = new CustomerDAO();
         ObservableList<Customer> customerList = customerDAO.getAllCustomers();
+
+        for (Customer customer : customerList) {
+            customer.setCreateDate(convertToLocal(customer.getCreateDate()));
+        }
 
         customerTableView.setItems(customerList);
 

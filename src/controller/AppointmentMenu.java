@@ -14,6 +14,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.stage.Stage;
 import model.Appointments;
+import utils.dateTimeUtils;
 import utils.generalUtils;
 
 import java.io.IOException;
@@ -59,9 +60,18 @@ public class AppointmentMenu {
         loadAppointmentsData();
     }
 
+    private String convertToLocal(String utcTimestamp) {
+        return dateTimeUtils.convertToLocal(utcTimestamp);
+    }
+
     private void loadAppointmentsData() throws SQLException {
         AppointmentsDAO appointmentsDAO = new AppointmentsDAO();
         ObservableList<Appointments> appointmentsList = appointmentsDAO.getAllAppointments();
+
+        for (Appointments appointments : appointmentsList) {
+            appointments.setStart(convertToLocal(appointments.getStart()));
+            appointments.setEnd(convertToLocal(appointments.getEnd()));
+        }
 
         appointmentsTableView.setItems(appointmentsList);
     }

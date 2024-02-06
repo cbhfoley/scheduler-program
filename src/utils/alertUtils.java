@@ -59,6 +59,18 @@ public class alertUtils {
                 alert.setContentText("Press OK to continue.");
                 alert.showAndWait();
             }
+            case 9 -> {
+                alert.setTitle("Error");
+                alert.setHeaderText("Action invalid");
+                alert.setContentText("The start of the appointment has to be before the end of the appointment.");
+                alert.showAndWait();
+            }
+            case 10 -> {
+                alert.setTitle("Error");
+                alert.setHeaderText("Action invalid");
+                alert.setContentText("The appointment must be scheduled between 8:00am and 10:00pm Eastern Time");
+                alert.showAndWait();
+            }
         }
     }
 }
