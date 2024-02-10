@@ -136,4 +136,21 @@ public class CustomerDAO {
         }
         return customerId;
     }
+
+    public String getCustomerNameById(int customerId) throws SQLException {
+        String customer = null;
+
+        String query = "SELECT Customer_name FROM customers WHERE Customer_ID = ?";
+
+        try (PreparedStatement statement = connection.prepareStatement(query)) {
+            statement.setString(1, String.valueOf(customerId));
+
+            try (ResultSet resultSet = statement.executeQuery()) {
+                if (resultSet.next()) {
+                    customer = resultSet.getString("Customer_Name");
+                }
+            }
+        }
+        return  customer;
+    }
 }

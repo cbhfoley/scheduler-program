@@ -10,7 +10,6 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
@@ -20,8 +19,6 @@ import utils.dateTimeUtils;
 
 import java.io.IOException;
 import java.sql.SQLException;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 
 public class EditCustomer {
 
@@ -35,7 +32,8 @@ public class EditCustomer {
     private TextField customerIdTextField;
     @FXML
     private TextField customerNameTextField;
-    @FXML TextField customerPhoneTextField;
+    @FXML
+    private TextField customerPhoneTextField;
     @FXML
     private TextField customerAddressTextField;
     @FXML
@@ -106,7 +104,9 @@ public class EditCustomer {
         String division = divisionComboBox.getValue();
         String user = getLoginUsername();
 
-        String time = dateTimeUtils.getCurrentTimestamp();
+        String localTimeStamp = dateTimeUtils.getCurrentTimestamp();
+        String utcTimeStamp = dateTimeUtils.convertToUTC(localTimeStamp);
+
         int divisionId = divisionsDAO.getDivisionIdByName(division);
         String divisionIdString = String.valueOf(divisionId);
 
@@ -114,7 +114,7 @@ public class EditCustomer {
         if (customerName.isEmpty() || phone.isEmpty() || address.isEmpty() || postalCode.isEmpty() || division == null) {
             alertUtils.alertDisplay(7);
         } else {
-            Customer customer = new Customer(customerToEdit.getCustomerId(), customerName, address, postalCode, phone, time, user, time, user, divisionIdString);
+            Customer customer = new Customer(customerToEdit.getCustomerId(), customerName, address, postalCode, phone, customerToEdit.getCreateDate(), customerToEdit.getCreatedBy(), utcTimeStamp, user, divisionIdString);
 
             customerDAO.updateCustomer(customerToEdit.getCustomerId(), customer);
             alertUtils.alertDisplay(8);

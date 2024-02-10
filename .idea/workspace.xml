@@ -7,17 +7,25 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="501cbc56-7a06-46f9-b02c-818bbbf67cd8" name="Changes" comment="Task 1-Eighth Commit">
+    <list default="true" id="501cbc56-7a06-46f9-b02c-818bbbf67cd8" name="Changes" comment="Task 1 - Ninth Commit">
+      <change afterPath="$PROJECT_DIR$/src/controller/EditAppointment.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/view/editAppointment.fxml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/controller/AddAppointment.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/controller/AddAppointment.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/controller/AddCustomer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/controller/AddCustomer.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/controller/AppointmentMenu.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/controller/AppointmentMenu.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/controller/CustomerMenu.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/controller/CustomerMenu.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/controller/EditCustomer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/controller/EditCustomer.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/controller/Login.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/controller/Login.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/controller/MainMenu.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/controller/MainMenu.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/dao/AppointmentsDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/dao/AppointmentsDAO.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/dao/ContactsDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/dao/ContactsDAO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/dao/CountryDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/dao/CountryDAO.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/dao/CustomerDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/dao/CustomerDAO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/dao/UserDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/dao/UserDAO.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/utils/alertUtils.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/utils/alertUtils.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/utils/dateTimeUtils.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/utils/dateTimeUtils.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/utils/generalUtils.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/utils/generalUtils.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/view/addAppointment.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/view/addAppointment.fxml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/view/appointmentMenu.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/view/appointmentMenu.fxml" afterDir="false" />
     </list>
@@ -143,7 +151,15 @@
       <option name="project" value="LOCAL" />
       <updated>1706905386741</updated>
     </task>
-    <option name="localTasksCounter" value="9" />
+    <task id="LOCAL-00009" summary="Task 1 - Ninth Commit">
+      <option name="closed" value="true" />
+      <created>1707204415442</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1707204415442</updated>
+    </task>
+    <option name="localTasksCounter" value="10" />
     <servers />
   </component>
   <component name="Vcs.Log.History.Properties">
@@ -177,7 +193,18 @@
     <MESSAGE value="Task 1-Sixth Commit" />
     <MESSAGE value="Task 1-Seventh Commit" />
     <MESSAGE value="Task 1-Eighth Commit" />
-    <option name="LAST_COMMIT_MESSAGE" value="Task 1-Eighth Commit" />
+    <MESSAGE value="Task 1 - Ninth Commit" />
+    <option name="LAST_COMMIT_MESSAGE" value="Task 1 - Ninth Commit" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <breakpoint enabled="true" type="java-exception">
+          <properties class="java.sql.SQLSyntaxErrorException" package="java.sql" />
+          <option name="timeStamp" value="4" />
+        </breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/C195_Project$C195_Project.ic" NAME="C195_Project Coverage Results" MODIFIED="1707201610849" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />

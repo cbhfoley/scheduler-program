@@ -14,7 +14,6 @@ import utils.generalUtils;
 
 import java.io.IOException;
 import java.net.URL;
-import java.util.Locale;
 import java.util.ResourceBundle;
 import java.util.TimeZone;
 
@@ -58,7 +57,7 @@ public class Login implements Initializable {
 
     /**
      * Method that sets the various labels depending on the language preference on the machine. Tested by manually
-     * adding a method in the intialize to set the Locale to French.
+     * adding a method in to initialize to set the Locale to French.
      *
      * @param bundle
      */
@@ -106,8 +105,8 @@ public class Login implements Initializable {
         UserDAO userDAO = new UserDAO();
 
         boolean isValidLogin = userDAO.validateLogin(enteredUsername, enteredPassword);
-        // Below code allows use w/o validating login each time. Will be commented out or removed for final production.
-        isValidLogin = true;
+        // Below code allows bypassing login check to make testing easier. Will be commented out or removed for final production.
+        // isValidLogin = true;
 
 
         if (isValidLogin) {
@@ -119,7 +118,7 @@ public class Login implements Initializable {
             generalUtils.centerOnScreen(stage);
             stage.show();
         } else {
-            alertDisplay(1, bundle);
+            alertDisplay(bundle);
             usernameTextField.clear();
             passwordPasswordField.clear();
         }
@@ -149,16 +148,13 @@ public class Login implements Initializable {
      * This could be added to alertUtils. I decided to leave it here since I created my alertUtils fairly late
      * into development.
      *
-     * @param alertType
      * @param bundle
      */
-    private void alertDisplay(int alertType, ResourceBundle bundle) {
+    private void alertDisplay(ResourceBundle bundle) {
         Alert alert = new Alert(Alert.AlertType.ERROR);
-        if (alertType == 1) {
-            alert.setTitle(bundle.getString("errorTitle"));
-            alert.setHeaderText(bundle.getString("errorHeader"));
-            alert.setContentText(bundle.getString("errorContent"));
-            alert.showAndWait();
-        }
+        alert.setTitle(bundle.getString("errorTitle"));
+        alert.setHeaderText(bundle.getString("errorHeader"));
+        alert.setContentText(bundle.getString("errorContent"));
+        alert.showAndWait();
     }
 }

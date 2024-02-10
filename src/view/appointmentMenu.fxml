@@ -4,12 +4,16 @@
 <?import javafx.scene.control.RadioButton?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.ToggleGroup?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane prefHeight="691.0" prefWidth="1467.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.AppointmentMenu">
+<AnchorPane prefHeight="691.0" prefWidth="1401.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.AppointmentMenu">
    <children>
-      <RadioButton layoutX="584.0" layoutY="57.0" mnemonicParsing="false" text="By Week" />
-      <RadioButton layoutX="733.0" layoutY="57.0" mnemonicParsing="false" text="By Month" />
+      <RadioButton layoutX="565.0" layoutY="56.0" mnemonicParsing="false" text="By Week">
+         <toggleGroup>
+            <ToggleGroup fx:id="ToggleGroup" />
+         </toggleGroup></RadioButton>
+      <RadioButton layoutX="698.0" layoutY="56.0" mnemonicParsing="false" text="By Month" toggleGroup="$ToggleGroup" />
       <TableView fx:id="appointmentsTableView" layoutX="72.0" layoutY="97.0" prefHeight="365.0" prefWidth="1245.0">
         <columns>
           <TableColumn fx:id="apptIdColumn" prefWidth="75.0" text="Appt. ID" />
@@ -28,5 +32,6 @@
       <Button layoutX="286.0" layoutY="498.0" mnemonicParsing="false" onAction="#addAppointmentButtonAction" text="Add Appointment" />
       <Button layoutX="508.0" layoutY="498.0" mnemonicParsing="false" onAction="#editAppointmentButtonAction" text="Edit Appointment" />
       <Button layoutX="728.0" layoutY="498.0" mnemonicParsing="false" onAction="#deleteAppointmentButtonAction" text="Delete Appointment" />
+      <RadioButton layoutX="841.0" layoutY="56.0" mnemonicParsing="false" selected="true" text="By All" toggleGroup="$ToggleGroup" />
    </children>
 </AnchorPane>

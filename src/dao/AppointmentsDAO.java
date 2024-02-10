@@ -38,6 +38,71 @@ public class AppointmentsDAO {
         }
     }
 
+    public static void editAppointment(int apptId, Appointments updatedAppointment) throws SQLException {
+        String query = "UPDATE appointments " +
+                "SET Title = ?, Description = ?, Location = ?, Type =?, Start = ?, End = ?, " +
+                "Last_Update = ?, Last_Updated_By = ?, Customer_ID = ?, User_ID = ?, Contact_ID = ? " +
+                "WHERE Appointment_ID = ?";
+
+        try (PreparedStatement statement = connection.prepareStatement(query)) {
+            statement.setString(1, updatedAppointment.getTitle());
+            statement.setString(2, updatedAppointment.getDescription());
+            statement.setString(3, updatedAppointment.getLocation());
+            statement.setString(4, updatedAppointment.getType());
+            statement.setString(5, updatedAppointment.getStart());
+            statement.setString(6, updatedAppointment.getEnd());
+            statement.setString(7, updatedAppointment.getLastUpdate());
+            statement.setString(8, updatedAppointment.getLastUpdatedBy());
+            statement.setInt(9, updatedAppointment.getCustomerId());
+            statement.setInt(10, updatedAppointment.getUserId());
+            statement.setString(11, updatedAppointment.getContact());
+            statement.setInt(12, apptId);
+
+            statement.executeUpdate();
+        }
+    }
+
+    public static boolean isOverlap(int customerId, String startTimeStamp, String endTimeStamp) throws SQLException {
+        String query = "SELECT COUNT(*) FROM appointments " +
+                "WHERE Customer_ID = ? " +
+                "AND Start < ? " +
+                "AND End > ? ";
+
+        try (PreparedStatement statement = connection.prepareStatement(query)) {
+            statement.setInt(1, customerId);
+            statement.setString(2, endTimeStamp);
+            statement.setString(3, startTimeStamp);
+
+            ResultSet resultSet = statement.executeQuery();
+            if (resultSet.next()) {
+                return resultSet.getInt(1) > 0;
+            }
+            return false;
+        }
+    }
+
+    public static boolean isOverlapForEdit(int customerId, int apptId, String startTimeStamp, String endTimeStamp) throws SQLException {
+        String query = "SELECT COUNT(*) FROM appointments " +
+                "WHERE Customer_ID = ? " +
+                "AND Appointment_ID != ? " +
+                "AND Start < ? " +
+                "AND End > ? ";
+
+        try (PreparedStatement statement = connection.prepareStatement(query)) {
+            statement.setInt(1, customerId);
+            statement.setInt(2, apptId);
+            statement.setString(3, endTimeStamp);
+            statement.setString(4, startTimeStamp);
+
+            ResultSet resultSet = statement.executeQuery();
+            if (resultSet.next()) {
+                return resultSet.getInt(1) > 0;
+            }
+            return false;
+        }
+
+    }
+
     /**
      * Method to create a list of all the appointments that are in the SQL database. It executes an SQL query to retrieve
      * all the appointment information.
@@ -75,5 +140,24 @@ public class AppointmentsDAO {
             }
         }
         return appointment;
+    }
+
+    public void deleteCustomerAppointments(int customerId) throws SQLException {
+        String query = "DELETE FROM appointments WHERE Customer_ID = ?";
+
+        try (PreparedStatement statement = connection.prepareStatement(query)) {
+            statement.setInt(1, customerId);
+            statement.executeUpdate();
+        }
+
+    }
+
+    public void deleteAppointment(int apptId) throws SQLException {
+        String query = "DELETE FROM appointments WHERE Appointment_ID = ?";
+
+        try (PreparedStatement statement = connection.prepareStatement(query)) {
+            statement.setInt(1, apptId);
+            statement.executeUpdate();
+        }
     }
 }

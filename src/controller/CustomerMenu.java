@@ -1,5 +1,6 @@
 package controller;
 
+import dao.AppointmentsDAO;
 import dao.CustomerDAO;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
@@ -20,7 +21,6 @@ import utils.alertUtils;
 import utils.dateTimeUtils;
 import utils.generalUtils;
 
-import javax.swing.text.html.Option;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.Optional;
@@ -54,9 +54,6 @@ public class CustomerMenu {
     private TableColumn<Customer, String> regionColumn;
 
     private Customer selectedCustomer;
-    private Boolean confirmed = false;
-
-
     @FXML
     public void initialize() throws SQLException {
         idColumn.setCellValueFactory(cellData -> new SimpleIntegerProperty(cellData.getValue().getCustomerId()).asObject());
@@ -71,22 +68,28 @@ public class CustomerMenu {
         loadCustomerData();
     }
 
-    private String convertToLocal(String utcTimestamp) {
-        return dateTimeUtils.convertToLocal(utcTimestamp);
-    }
-
+    /**
+     * Method to load the customer data from the SQL database into the customer table view.
+     * It converts their created date to the local time the user is viewing it in as well.
+     *
+     * @throws SQLException
+     */
     private void loadCustomerData() throws SQLException {
         CustomerDAO customerDAO = new CustomerDAO();
         ObservableList<Customer> customerList = customerDAO.getAllCustomers();
 
         for (Customer customer : customerList) {
-            customer.setCreateDate(convertToLocal(customer.getCreateDate()));
+            customer.setCreateDate(dateTimeUtils.convertToLocal(customer.getCreateDate()));
         }
-
         customerTableView.setItems(customerList);
-
     }
 
+    /**
+     * Loads the main menu view when pressed.
+     *
+     * @param actionEvent
+     * @throws IOException
+     */
     public void mainMenuButtonAction(ActionEvent actionEvent) throws IOException {
         Parent parent = FXMLLoader.load(getClass().getResource("/view/mainMenu.fxml"));
         Scene scene = new Scene(parent);
@@ -96,6 +99,12 @@ public class CustomerMenu {
         stage.show();
     }
 
+    /**
+     * Loads the add customer view when pressed.
+     *
+     * @param actionEvent
+     * @throws IOException
+     */
     public void addCustomerButtonAction(ActionEvent actionEvent) throws IOException {
         Parent parent = FXMLLoader.load(getClass().getResource("/view/addCustomer.fxml"));
         Scene scene = new Scene(parent);
@@ -104,7 +113,14 @@ public class CustomerMenu {
         stage.show();
     }
 
-    public void editCustomerButtonAction(ActionEvent actionEvent) throws IOException, SQLException {
+    /**
+     * Loads the edit customer view when pressed.
+     * If a customer is not selected it displays an error stating as such.
+     *
+     * @param actionEvent
+     * @throws IOException
+     */
+    public void editCustomerButtonAction(ActionEvent actionEvent) throws IOException {
         selectedCustomer = customerTableView.getSelectionModel().getSelectedItem();
         if (selectedCustomer == null) {
             alertUtils.alertDisplay(5);
@@ -123,6 +139,17 @@ public class CustomerMenu {
         }
     }
 
+    /**
+     * Deletes the selected customer, if no customer selected it displays a message indicating as such.
+     * If also deletes any appointments the customer might have before deleting the customer. It deletes their appointments
+     * based off of the customer ID.
+     * <p>
+     * The user first must confirm they want to delete the customer (and any of their appointments) by pressing YES.
+     * If NO is pressed, or they click the X it will not delete any records.
+     *
+     * @param actionEvent
+     * @throws SQLException
+     */
     public void deleteCustomerButtonAction(ActionEvent actionEvent) throws SQLException {
         selectedCustomer = customerTableView.getSelectionModel().getSelectedItem();
         if (selectedCustomer == null) {
@@ -132,19 +159,36 @@ public class CustomerMenu {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Confirmation");
             alert.setHeaderText("Deletion Confirmation");
-            alert.setContentText("This will delete all customer records, including appointments. " +
+            alert.setContentText("This will delete the selected customer, INCLUDING their appointments. " +
                     "Are you sure you want to do this?");
             alert.getButtonTypes().setAll(ButtonType.YES, ButtonType.NO);
             Optional<ButtonType> result = alert.showAndWait();
             if (result.orElse(ButtonType.NO) == ButtonType.YES){
+                deleteCustomerAppointments();
                 deleteCustomer();
+                alertUtils.alertDisplay(13);
+                loadCustomerData();
             }
         }
     }
 
+    /**
+     * Method to delete customer appointments based on their customer ID before a customer is deleted due to foreign key constraints.
+     *
+     * @throws SQLException
+     */
+    private void deleteCustomerAppointments() throws SQLException {
+        AppointmentsDAO appointmentsDAO = new AppointmentsDAO();
+        appointmentsDAO.deleteCustomerAppointments(selectedCustomer.getCustomerId());
+    }
+
+    /**
+     * Method to delete a customer based on their customer ID.
+     *
+     * @throws SQLException
+     */
     public void deleteCustomer() throws SQLException {
         CustomerDAO customerDAO = new CustomerDAO();
         customerDAO.deleteCustomer(selectedCustomer.getCustomerId());
-        loadCustomerData();
     }
 }

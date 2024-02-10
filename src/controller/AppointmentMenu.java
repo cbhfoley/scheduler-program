@@ -10,15 +10,16 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javafx.stage.Stage;
 import model.Appointments;
+import utils.alertUtils;
 import utils.dateTimeUtils;
 import utils.generalUtils;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.Optional;
 
 public class AppointmentMenu {
     @FXML
@@ -43,6 +44,8 @@ public class AppointmentMenu {
     private TableColumn<Appointments, Integer> userIdColumn;
     @FXML
     private TableColumn<Appointments, String> contactColumn;
+
+    private Appointments selectedAppointment;
 
     @FXML
     public void initialize() throws SQLException {
@@ -94,9 +97,47 @@ public class AppointmentMenu {
         stage.show();
     }
 
-    public void editAppointmentButtonAction(ActionEvent actionEvent) {
+    public void editAppointmentButtonAction(ActionEvent actionEvent) throws IOException {
+        selectedAppointment = appointmentsTableView.getSelectionModel().getSelectedItem();
+        if (selectedAppointment == null) {
+            alertUtils.alertDisplay(11);
+        } else {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/editAppointment.fxml"));
+            Parent parent = loader.load();
+
+            EditAppointment editAppointmentController = loader.getController();
+            editAppointmentController.setAppointmentToEdit(selectedAppointment);
+
+            Scene scene = new Scene(parent);
+            Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+            stage.setScene(scene);
+            generalUtils.centerOnScreen(stage);
+            stage.show();
+        }
     }
 
-    public void deleteAppointmentButtonAction(ActionEvent actionEvent) {
+    public void deleteAppointmentButtonAction(ActionEvent actionEvent) throws SQLException {
+        selectedAppointment = appointmentsTableView.getSelectionModel().getSelectedItem();
+        if (selectedAppointment == null) {
+            alertUtils.alertDisplay(11);
+        } else {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Confirmation");
+            alert.setHeaderText("Deletion Confirmation");
+            alert.setContentText("This will delete the selected appointment. " +
+                    "Are you sure you want to do this?");
+            alert.getButtonTypes().setAll(ButtonType.YES, ButtonType.NO);
+            Optional<ButtonType> result = alert.showAndWait();
+            if (result.orElse(ButtonType.NO) == ButtonType.YES){
+                deleteAppointment();
+                alertUtils.alertDisplay(12);
+                loadAppointmentsData();
+            }
+        }        
+    }
+
+    private void deleteAppointment() throws SQLException {
+        AppointmentsDAO appointmentsDAO = new AppointmentsDAO();
+        appointmentsDAO.deleteAppointment(selectedAppointment.getApptId());
     }
 }

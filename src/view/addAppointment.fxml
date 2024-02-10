@@ -17,7 +17,7 @@
       <Label layoutX="112.0" layoutY="286.0" text="Type" />
       <Label layoutX="112.0" layoutY="322.0" text="Start" />
       <Label layoutX="390.0" layoutY="322.0" text="End" />
-      <Label layoutX="112.0" layoutY="393.0" text="Customer ID" />
+      <Label layoutX="112.0" layoutY="393.0" text="Customer" />
       <TextField fx:id="titleTextField" layoutX="216.0" layoutY="144.0" />
       <DatePicker fx:id="startDatePicker" layoutX="217.0" layoutY="318.0" prefHeight="25.0" prefWidth="149.0" />
       <DatePicker fx:id="endDatePicker" layoutX="431.0" layoutY="318.0" prefHeight="25.0" prefWidth="149.0" />

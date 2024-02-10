@@ -21,14 +21,17 @@ import utils.alertUtils;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 
-
-public class AddAppointment {
+public class EditAppointment {
     @FXML
     private DatePicker startDatePicker;
     @FXML
     private DatePicker endDatePicker;
+    @FXML
+    private TextField appointmentIdTextField;
     @FXML
     private TextField descriptionTextField;
     @FXML
@@ -48,6 +51,9 @@ public class AddAppointment {
 
     private ContactsDAO contactsDAO;
     private CustomerDAO customerDAO;
+    private Appointments appointmentToEdit;
+    private static final DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+
 
     @FXML
     private void initialize() throws SQLException {
@@ -112,18 +118,16 @@ public class AddAppointment {
         LocalDate selectedEndDate = endDatePicker.getValue();
         String startTime = startTimeComboBox.getValue();
         String endTime = endTimeComboBox.getValue();
-        // Checks that information is entered in all fields ONLY.
+
         if (title.isEmpty() || description.isEmpty() || location.isEmpty() || type.isEmpty()  || customer == null
                 || contact == null || selectedStartDate == null || selectedEndDate == null || startTime == null ||endTime == null) {
             alertUtils.alertDisplay(1);
             return;
         }
-        // Checks that the start time entered makes logical sense (start time has to be before end).
         if (!dateTimeUtils.isStartBeforeEnd(selectedStartDate, startTime, selectedEndDate, endTime)) {
             alertUtils.alertDisplay(9);
             return;
         }
-        // Checks that the suggested appointment time is within the defined business hours.
         if (!dateTimeUtils.isWithinBusinessHours(selectedStartDate, startTime, selectedEndDate, endTime)) {
             alertUtils.alertDisplay(10);
         }
@@ -138,12 +142,13 @@ public class AddAppointment {
             String utcTimeStamp = dateTimeUtils.convertToUTC(localTimeStamp);
             int userId = UserDAO.getUserIdByName(user);
 
-            if (AppointmentsDAO.isOverlap(customerId, startTimeStamp, endTimeStamp)) {
-                alertUtils.alertDisplay(14);
+            if (AppointmentsDAO.isOverlapForEdit(customerId, appointmentToEdit.getApptId(), startTimeStamp, endTimeStamp)) {
+                alertUtils.alertDisplay(15);
             } else {
-                Appointments appointment = new Appointments(-1, title, description, location, type, startTimeStamp, endTimeStamp, utcTimeStamp, user, utcTimeStamp, user, customerId, userId, contactIdString);
 
-                AppointmentsDAO.addAppointment(appointment);
+                Appointments appointment = new Appointments(appointmentToEdit.getApptId(), title, description, location, type, startTimeStamp, endTimeStamp, appointmentToEdit.getCreateDate(), appointmentToEdit.getCreatedBy(), utcTimeStamp, user, customerId, userId, contactIdString);
+
+                AppointmentsDAO.editAppointment(appointmentToEdit.getApptId(), appointment);
                 alertUtils.alertDisplay(2);
                 Parent parent = FXMLLoader.load(getClass().getResource("/view/appointmentMenu.fxml"));
                 Scene scene = new Scene(parent);
@@ -152,11 +157,48 @@ public class AddAppointment {
                 generalUtils.centerOnScreen(stage);
                 stage.show();
             }
-
-
         }
 
     }
 
+    public void setAppointmentToEdit(Appointments appointmentToEdit) {
+        this.appointmentToEdit = appointmentToEdit;
+        populateFieldsWithAppointmentData();
+    }
 
+    private void populateFieldsWithAppointmentData() {
+        try {
+            int appointmentId = appointmentToEdit.getApptId();
+            String title = appointmentToEdit.getTitle();
+            String description = appointmentToEdit.getDescription();
+            String location = appointmentToEdit.getLocation();
+            String contact = appointmentToEdit.getContact();
+            String type = appointmentToEdit.getType();
+            String startDate = appointmentToEdit.getStart();
+            String endDate = appointmentToEdit.getEnd();
+            LocalDateTime startDateTime = LocalDateTime.parse(startDate, dateTimeFormatter);
+            LocalDateTime endDateTime = LocalDateTime.parse(endDate, dateTimeFormatter);
+            LocalDate startDateValue = startDateTime.toLocalDate();
+            LocalTime startTimeValue = startDateTime.toLocalTime();
+            LocalDate endDateValue = endDateTime.toLocalDate();
+            LocalTime endTimeValue = endDateTime.toLocalTime();
+            int customerId = appointmentToEdit.getCustomerId();
+            String customer = customerDAO.getCustomerNameById(customerId);
+
+            appointmentIdTextField.setPromptText(String.valueOf(appointmentId));
+            titleTextField.setText(title);
+            descriptionTextField.setText(description);
+            locationTextField.setText(location);
+            typeTextField.setText(type);
+            contactComboBox.setValue(contact);
+            customerIdComboBox.setValue(customer);
+            startDatePicker.setValue(startDateValue);
+            startTimeComboBox.setValue(String.valueOf(startTimeValue));
+            endDatePicker.setValue(endDateValue);
+            endTimeComboBox.setValue(String.valueOf(endTimeValue));
+
+        } catch (NumberFormatException | SQLException e) {
+            e.printStackTrace();
+        }
+    }
 }
