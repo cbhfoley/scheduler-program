@@ -2,6 +2,7 @@ package utils;
 
 import java.time.*;
 import java.time.format.DateTimeFormatter;
+import java.time.temporal.TemporalAdjusters;
 
 public class dateTimeUtils {
     private static final DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
@@ -122,5 +123,57 @@ public class dateTimeUtils {
         else {
             return false;
         }
+    }
+
+    /**
+     * Method to retrieve the start of the week on Sunday at 12:00am.
+     *
+     * @return
+     */
+    public static LocalDateTime getStartOfWeek() {
+        LocalDate currentDate = LocalDate.now();
+
+        LocalDate startDateOfWeek = currentDate.with(TemporalAdjusters.previousOrSame(DayOfWeek.SUNDAY));
+
+        return LocalDateTime.of(startDateOfWeek, LocalTime.MIDNIGHT);
+    }
+
+    /**
+     * Method to retrieve the end of the week on Saturday at 11:59pm.
+     *
+     * @return
+     */
+    public static LocalDateTime getEndOfWeek() {
+        LocalDate currentDate = LocalDate.now();
+
+        LocalDate endDateOfWeek = currentDate.with(TemporalAdjusters.nextOrSame(DayOfWeek.SATURDAY));
+
+        return LocalDateTime.of(endDateOfWeek, LocalTime.MAX);
+    }
+
+    /**
+     * Method to retrieve the start of the month.
+     *
+     * @return
+     */
+    public static LocalDateTime getStartOfMonth() {
+        LocalDate currentDate = LocalDate.now();
+
+        LocalDate startDateOfMonth = currentDate.with(TemporalAdjusters.firstDayOfMonth());
+
+        return LocalDateTime.of(startDateOfMonth, LocalTime.MIDNIGHT);
+    }
+
+    /**
+     * Method to retrieve the end of the month.
+     *
+     * @return
+     */
+    public static LocalDateTime getEndOfMonth() {
+        LocalDate currentDate = LocalDate.now();
+
+        LocalDate endDateOfMonth = currentDate.with(TemporalAdjusters.lastDayOfMonth());
+
+        return LocalDateTime.of(endDateOfMonth, LocalTime.MAX);
     }
 }

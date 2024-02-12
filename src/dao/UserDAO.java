@@ -1,5 +1,8 @@
 package dao;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -30,6 +33,7 @@ public class UserDAO {
         return  userId;
     }
 
+
     /** Method to validate login. It accepts the entered in username and password from the "login" view and returns
      * true/false depending on the user input
      *
@@ -53,6 +57,38 @@ public class UserDAO {
             return false;
         }
 
+    }
+
+    public ObservableList<String> getAllUserNames() throws SQLException {
+        ObservableList<String> userNames = FXCollections.observableArrayList();
+
+        String query = "SELECT * FROM users";
+
+        try (PreparedStatement statement = connection.prepareStatement(query);
+             ResultSet resultSet = statement.executeQuery()) {
+
+            while (resultSet.next()) {
+                userNames.add(resultSet.getString("User_Name"));
+            }
+        }
+        return userNames;
+    }
+
+    public String getUserNameById(int userId) throws SQLException {
+        String user = null;
+
+        String query = "SELECT User_Name FROM users WHERE User_ID = ?";
+
+        try (PreparedStatement statement = connection.prepareStatement(query)) {
+            statement.setString(1, String.valueOf(userId));
+
+            try (ResultSet resultSet = statement.executeQuery()) {
+                if (resultSet.next()) {
+                    user = resultSet.getString("User_Name");
+                }
+            }
+        }
+        return user;
     }
 }
 

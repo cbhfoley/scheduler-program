@@ -48,9 +48,12 @@ public class EditAppointment {
     private ComboBox<String> endTimeComboBox;
     @FXML
     private ComboBox<String> customerIdComboBox;
+    @FXML
+    private ComboBox<String> userComboBox;
 
     private ContactsDAO contactsDAO;
     private CustomerDAO customerDAO;
+    private UserDAO userDAO;
     private Appointments appointmentToEdit;
     private static final DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 
@@ -59,9 +62,11 @@ public class EditAppointment {
     private void initialize() throws SQLException {
         contactsDAO = new ContactsDAO();
         customerDAO = new CustomerDAO();
+        userDAO = new UserDAO();
         loadContactsData();
         populateTimeComboBoxes();
         populateCustomerComboBox();
+        populateUserComboBox();
 
         // Sets the end date DatePicker to the value of the start date DatePicker.
         // The only scenario where the start and end date would be different would be if an appointment was scheduled
@@ -76,6 +81,11 @@ public class EditAppointment {
             LocalTime endTime = startTime.plusHours(1);
             endTimeComboBox.setValue(String.valueOf(endTime));
         });
+    }
+
+    private void populateUserComboBox() throws SQLException {
+        ObservableList<String> userNames = userDAO.getAllUserNames();
+        userComboBox.setItems(userNames);
     }
 
     private void populateCustomerComboBox() throws SQLException {
@@ -118,6 +128,7 @@ public class EditAppointment {
         LocalDate selectedEndDate = endDatePicker.getValue();
         String startTime = startTimeComboBox.getValue();
         String endTime = endTimeComboBox.getValue();
+        String user = userComboBox.getValue();
 
         if (title.isEmpty() || description.isEmpty() || location.isEmpty() || type.isEmpty()  || customer == null
                 || contact == null || selectedStartDate == null || selectedEndDate == null || startTime == null ||endTime == null) {
@@ -137,7 +148,6 @@ public class EditAppointment {
             String contactIdString = String.valueOf(contactId);
             String startTimeStamp = dateTimeUtils.convertToUTC(dateTimeUtils.combineDateTime(selectedStartDate, startTime));
             String endTimeStamp = dateTimeUtils.convertToUTC(dateTimeUtils.combineDateTime(selectedEndDate, endTime));
-            String user = generalUtils.getLoginUsername();
             String localTimeStamp = dateTimeUtils.getCurrentTimestamp();
             String utcTimeStamp = dateTimeUtils.convertToUTC(localTimeStamp);
             int userId = UserDAO.getUserIdByName(user);
@@ -184,6 +194,8 @@ public class EditAppointment {
             LocalTime endTimeValue = endDateTime.toLocalTime();
             int customerId = appointmentToEdit.getCustomerId();
             String customer = customerDAO.getCustomerNameById(customerId);
+            int userId = appointmentToEdit.getUserId();
+            String user = userDAO.getUserNameById(userId);
 
             appointmentIdTextField.setPromptText(String.valueOf(appointmentId));
             titleTextField.setText(title);
@@ -196,6 +208,7 @@ public class EditAppointment {
             startTimeComboBox.setValue(String.valueOf(startTimeValue));
             endDatePicker.setValue(endDateValue);
             endTimeComboBox.setValue(String.valueOf(endTimeValue));
+            userComboBox.setValue(user);
 
         } catch (NumberFormatException | SQLException e) {
             e.printStackTrace();

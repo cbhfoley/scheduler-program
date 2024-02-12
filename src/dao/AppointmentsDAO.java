@@ -8,6 +8,7 @@ import model.Appointments;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDateTime;
 
 import static helper.JDBC.connection;
 
@@ -114,7 +115,9 @@ public class AppointmentsDAO {
         ObservableList<Appointments> appointment = FXCollections.observableArrayList();
         String query = "SELECT Appointments.*, Contacts.Contact_Name " +
                         "FROM Appointments " +
-                        "JOIN Contacts ON Appointments.Contact_ID = Contacts.Contact_ID";
+                        "JOIN Contacts ON Appointments.Contact_ID = Contacts.Contact_ID " +
+                        "ORDER BY Appointment_ID";
+
 
         try (PreparedStatement statement = connection.prepareStatement(query);
              ResultSet resultSet = statement.executeQuery()) {
@@ -159,5 +162,40 @@ public class AppointmentsDAO {
             statement.setInt(1, apptId);
             statement.executeUpdate();
         }
+    }
+
+    public ObservableList<Appointments> getAppointmentsFiltered(LocalDateTime start, LocalDateTime end) throws SQLException {
+        ObservableList<Appointments> appointmentsList = FXCollections.observableArrayList();
+        String query = "SELECT Appointments.*, Contacts.Contact_Name " +
+                "FROM Appointments " +
+                "JOIN Contacts ON Appointments.Contact_ID = Contacts.Contact_ID " +
+                "WHERE Start >= ? AND End <= ? " +
+                "ORDER BY Appointment_ID";
+
+        try (PreparedStatement statement = connection.prepareStatement(query)) {
+            statement.setString(1, String.valueOf(start));
+            statement.setString(2, String.valueOf(end));
+            ResultSet resultSet = statement.executeQuery();
+                while (resultSet.next()) {
+                    Appointments appointments = new Appointments(
+                            resultSet.getInt("Appointment_ID"),
+                            resultSet.getString("Title"),
+                            resultSet.getString("Description"),
+                            resultSet.getString("Location"),
+                            resultSet.getString("Type"),
+                            resultSet.getString("Start"),
+                            resultSet.getString("End"),
+                            resultSet.getString("Create_Date"),
+                            resultSet.getString("Created_By"),
+                            resultSet.getString("Last_Update"),
+                            resultSet.getString("Last_Updated_By"),
+                            resultSet.getInt("Customer_ID"),
+                            resultSet.getInt("User_ID"),
+                            resultSet.getString("Contact_Name")
+                    );
+                    appointmentsList.add(appointments);
+                }
+        }
+        return appointmentsList;
     }
 }

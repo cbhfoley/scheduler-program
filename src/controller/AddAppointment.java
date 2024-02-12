@@ -45,17 +45,22 @@ public class AddAppointment {
     private ComboBox<String> endTimeComboBox;
     @FXML
     private ComboBox<String> customerIdComboBox;
+    @FXML
+    private ComboBox<String> userComboBox;
 
     private ContactsDAO contactsDAO;
     private CustomerDAO customerDAO;
+    private UserDAO userDAO;
 
     @FXML
     private void initialize() throws SQLException {
         contactsDAO = new ContactsDAO();
         customerDAO = new CustomerDAO();
+        userDAO = new UserDAO();
         loadContactsData();
         populateTimeComboBoxes();
         populateCustomerComboBox();
+        populateUserComboBox();
 
         // Sets the end date DatePicker to the value of the start date DatePicker.
         // The only scenario where the start and end date would be different would be if an appointment was scheduled
@@ -70,6 +75,11 @@ public class AddAppointment {
             LocalTime endTime = startTime.plusHours(1);
             endTimeComboBox.setValue(String.valueOf(endTime));
         });
+    }
+
+    private void populateUserComboBox() throws SQLException {
+        ObservableList<String> userNames = userDAO.getAllUserNames();
+        userComboBox.setItems(userNames);
     }
 
     private void populateCustomerComboBox() throws SQLException {
@@ -112,9 +122,10 @@ public class AddAppointment {
         LocalDate selectedEndDate = endDatePicker.getValue();
         String startTime = startTimeComboBox.getValue();
         String endTime = endTimeComboBox.getValue();
+        String user = userComboBox.getValue();
         // Checks that information is entered in all fields ONLY.
         if (title.isEmpty() || description.isEmpty() || location.isEmpty() || type.isEmpty()  || customer == null
-                || contact == null || selectedStartDate == null || selectedEndDate == null || startTime == null ||endTime == null) {
+                || contact == null || selectedStartDate == null || selectedEndDate == null || startTime == null ||endTime == null || user == null) {
             alertUtils.alertDisplay(1);
             return;
         }
@@ -133,7 +144,6 @@ public class AddAppointment {
             String contactIdString = String.valueOf(contactId);
             String startTimeStamp = dateTimeUtils.convertToUTC(dateTimeUtils.combineDateTime(selectedStartDate, startTime));
             String endTimeStamp = dateTimeUtils.convertToUTC(dateTimeUtils.combineDateTime(selectedEndDate, endTime));
-            String user = generalUtils.getLoginUsername();
             String localTimeStamp = dateTimeUtils.getCurrentTimestamp();
             String utcTimeStamp = dateTimeUtils.convertToUTC(localTimeStamp);
             int userId = UserDAO.getUserIdByName(user);

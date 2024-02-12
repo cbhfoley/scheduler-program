@@ -106,7 +106,7 @@ public class CustomerDAO {
     }
 
     public ObservableList<String> getAllCustomerNames() throws SQLException {
-        ObservableList<String> CustomerNames = FXCollections.observableArrayList();
+        ObservableList<String> customerNames = FXCollections.observableArrayList();
 
         String query = "SELECT * FROM customers";
 
@@ -114,10 +114,10 @@ public class CustomerDAO {
              ResultSet resultSet = statement.executeQuery()) {
 
             while (resultSet.next()) {
-                CustomerNames.add(resultSet.getString("Customer_Name"));
+                customerNames.add(resultSet.getString("Customer_Name"));
             }
         }
-        return CustomerNames;
+        return customerNames;
     }
 
     public int getCustomerIdByName(String customer) throws SQLException {

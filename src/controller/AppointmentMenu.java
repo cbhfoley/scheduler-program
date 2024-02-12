@@ -19,6 +19,7 @@ import utils.generalUtils;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.time.LocalDateTime;
 import java.util.Optional;
 
 public class AppointmentMenu {
@@ -44,6 +45,11 @@ public class AppointmentMenu {
     private TableColumn<Appointments, Integer> userIdColumn;
     @FXML
     private TableColumn<Appointments, String> contactColumn;
+    @FXML
+    private RadioButton weekRadioButton;
+    @FXML
+    private RadioButton monthRadioButton;
+
 
     private Appointments selectedAppointment;
 
@@ -69,7 +75,22 @@ public class AppointmentMenu {
 
     private void loadAppointmentsData() throws SQLException {
         AppointmentsDAO appointmentsDAO = new AppointmentsDAO();
-        ObservableList<Appointments> appointmentsList = appointmentsDAO.getAllAppointments();
+        ObservableList<Appointments> appointmentsList = null;
+
+        if (weekRadioButton.isSelected()) {
+            LocalDateTime startOfWeek = dateTimeUtils.getStartOfWeek();
+            LocalDateTime endOfWeek = dateTimeUtils.getEndOfWeek();
+            appointmentsList = appointmentsDAO.getAppointmentsFiltered(startOfWeek, endOfWeek);
+        }
+        else if (monthRadioButton.isSelected()) {
+            LocalDateTime startOfMonth = dateTimeUtils.getStartOfMonth();
+            LocalDateTime endOfMonth = dateTimeUtils.getEndOfMonth();
+            appointmentsList = appointmentsDAO.getAppointmentsFiltered(startOfMonth, endOfMonth);
+        }
+        else {
+            appointmentsList = appointmentsDAO.getAllAppointments();
+        }
+
 
         for (Appointments appointments : appointmentsList) {
             appointments.setStart(convertToLocal(appointments.getStart()));
@@ -77,6 +98,11 @@ public class AppointmentMenu {
         }
 
         appointmentsTableView.setItems(appointmentsList);
+    }
+
+    @FXML
+    private void handleRadioButtonAction() throws SQLException {
+        loadAppointmentsData();
     }
 
     public void mainMenuButtonAction(ActionEvent actionEvent) throws IOException {
@@ -116,7 +142,7 @@ public class AppointmentMenu {
         }
     }
 
-    public void deleteAppointmentButtonAction(ActionEvent actionEvent) throws SQLException {
+    public void deleteAppointmentButtonAction() throws SQLException {
         selectedAppointment = appointmentsTableView.getSelectionModel().getSelectedItem();
         if (selectedAppointment == null) {
             alertUtils.alertDisplay(11);

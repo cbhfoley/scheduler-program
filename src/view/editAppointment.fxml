@@ -30,7 +30,9 @@
         <ComboBox fx:id="customerIdComboBox" layoutX="216.0" layoutY="389.0" prefHeight="25.0" prefWidth="149.0" />
         <Button layoutX="190.0" layoutY="492.0" mnemonicParsing="false" onAction="#cancelButtonAction" text="Cancel" />
         <Button layoutX="384.0" layoutY="492.0" mnemonicParsing="false" onAction="#saveButtonAction" text="Save" />
-        <Label layoutX="261.0" layoutY="52.0" text="Edit Appointment" />
+        <Label layoutX="261.0" layoutY="52.0" text="Add Appointment" />
         <TextField fx:id="descriptionTextField" layoutX="216.0" layoutY="180.0" />
+        <Label layoutX="112.0" layoutY="432.0" text="User" />
+        <ComboBox fx:id="userComboBox" layoutX="216.0" layoutY="428.0" prefHeight="25.0" prefWidth="149.0" />
     </children>
 </AnchorPane>
