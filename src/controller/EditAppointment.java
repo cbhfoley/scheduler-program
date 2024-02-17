@@ -47,7 +47,7 @@ public class EditAppointment {
     @FXML
     private ComboBox<String> endTimeComboBox;
     @FXML
-    private ComboBox<String> customerIdComboBox;
+    private ComboBox<String> customerComboBox;
     @FXML
     private ComboBox<String> userComboBox;
 
@@ -63,7 +63,7 @@ public class EditAppointment {
         contactsDAO = new ContactsDAO();
         customerDAO = new CustomerDAO();
         userDAO = new UserDAO();
-        loadContactsData();
+        populateContactsComboBox();
         populateTimeComboBoxes();
         populateCustomerComboBox();
         populateUserComboBox();
@@ -90,10 +90,10 @@ public class EditAppointment {
 
     private void populateCustomerComboBox() throws SQLException {
         ObservableList<String> customerNames = customerDAO.getAllCustomerNames();
-        customerIdComboBox.setItems(customerNames);
+        customerComboBox.setItems(customerNames);
     }
 
-    private void loadContactsData() throws SQLException {
+    private void populateContactsComboBox() throws SQLException {
         ObservableList<String> contacts = contactsDAO.getAllContacts();
         contactComboBox.setItems(contacts);
     }
@@ -122,7 +122,7 @@ public class EditAppointment {
         String description = descriptionTextField.getText();
         String location = locationTextField.getText();
         String type = typeTextField.getText();
-        String customer = customerIdComboBox.getValue();
+        String customer = customerComboBox.getValue();
         String contact = contactComboBox.getValue();
         LocalDate selectedStartDate = startDatePicker.getValue();
         LocalDate selectedEndDate = endDatePicker.getValue();
@@ -203,7 +203,7 @@ public class EditAppointment {
             locationTextField.setText(location);
             typeTextField.setText(type);
             contactComboBox.setValue(contact);
-            customerIdComboBox.setValue(customer);
+            customerComboBox.setValue(customer);
             startDatePicker.setValue(startDateValue);
             startTimeComboBox.setValue(String.valueOf(startTimeValue));
             endDatePicker.setValue(endDateValue);

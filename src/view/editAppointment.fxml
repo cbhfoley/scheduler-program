@@ -27,7 +27,7 @@
         <TextField fx:id="typeTextField" layoutX="216.0" layoutY="282.0" />
         <ComboBox fx:id="startTimeComboBox" layoutX="216.0" layoutY="355.0" prefWidth="150.0" />
         <ComboBox fx:id="endTimeComboBox" layoutX="431.0" layoutY="355.0" prefWidth="150.0" />
-        <ComboBox fx:id="customerIdComboBox" layoutX="216.0" layoutY="389.0" prefHeight="25.0" prefWidth="149.0" />
+        <ComboBox fx:id="customerComboBox" layoutX="216.0" layoutY="389.0" prefHeight="25.0" prefWidth="149.0" />
         <Button layoutX="190.0" layoutY="492.0" mnemonicParsing="false" onAction="#cancelButtonAction" text="Cancel" />
         <Button layoutX="384.0" layoutY="492.0" mnemonicParsing="false" onAction="#saveButtonAction" text="Save" />
         <Label layoutX="261.0" layoutY="52.0" text="Add Appointment" />

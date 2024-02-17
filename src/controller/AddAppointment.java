@@ -44,7 +44,7 @@ public class AddAppointment {
     @FXML
     private ComboBox<String> endTimeComboBox;
     @FXML
-    private ComboBox<String> customerIdComboBox;
+    private ComboBox<String> customerComboBox;
     @FXML
     private ComboBox<String> userComboBox;
 
@@ -57,19 +57,19 @@ public class AddAppointment {
         contactsDAO = new ContactsDAO();
         customerDAO = new CustomerDAO();
         userDAO = new UserDAO();
-        loadContactsData();
+        populateContactsComboBox();
         populateTimeComboBoxes();
         populateCustomerComboBox();
         populateUserComboBox();
 
         // Sets the end date DatePicker to the value of the start date DatePicker.
-        // The only scenario where the start and end date would be different would be if an appointment was scheduled
+        // The most likely scenario where the start and end date would be different would be if an appointment was scheduled
         // in a time zone that was within business hours, but it overlapped at midnight in the local users' timezone.
         startDatePicker.valueProperty().addListener((observable, oldValue, newValue) -> {
             endDatePicker.setValue(newValue);
         });
         // Sets the end time combo box to 1 hour after the start time combo box. End time can still be changed if need be.
-        // This allows for the most common appointment length (1 hour) to be set up with ease
+        // This allows for the most common appointment length (1 hour) to be set up with ease.
         startTimeComboBox.valueProperty().addListener((observable, oldValue, newValue) -> {
             LocalTime startTime = LocalTime.parse(newValue);
             LocalTime endTime = startTime.plusHours(1);
@@ -77,21 +77,40 @@ public class AddAppointment {
         });
     }
 
+    /**
+     * Method to set the items in the userComboBox to the users in the database.
+     *
+     * @throws SQLException
+     */
     private void populateUserComboBox() throws SQLException {
         ObservableList<String> userNames = userDAO.getAllUserNames();
         userComboBox.setItems(userNames);
     }
 
+    /**
+     * Method to set the items in the customerComboBox to the customers in the database.
+     *
+     * @throws SQLException
+     */
     private void populateCustomerComboBox() throws SQLException {
         ObservableList<String> customerNames = customerDAO.getAllCustomerNames();
-        customerIdComboBox.setItems(customerNames);
+        customerComboBox.setItems(customerNames);
     }
 
-    private void loadContactsData() throws SQLException {
+    /**
+     * Method to set the items in the contactsComboBox to the contacts in the database.
+     *
+     * @throws SQLException
+     */
+    private void populateContactsComboBox() throws SQLException {
         ObservableList<String> contacts = contactsDAO.getAllContacts();
         contactComboBox.setItems(contacts);
     }
 
+    /**
+     * Method to set the timeComboBoxes with times incrementing every 15 minutes from 00:00 to 23:45.
+     *
+     */
     private void populateTimeComboBoxes() {
         for (int hour = 0; hour <24; hour++) {
             for (int minute = 0; minute <60; minute += 15) {
@@ -116,7 +135,7 @@ public class AddAppointment {
         String description = descriptionTextField.getText();
         String location = locationTextField.getText();
         String type = typeTextField.getText();
-        String customer = customerIdComboBox.getValue();
+        String customer = customerComboBox.getValue();
         String contact = contactComboBox.getValue();
         LocalDate selectedStartDate = startDatePicker.getValue();
         LocalDate selectedEndDate = endDatePicker.getValue();
@@ -147,7 +166,7 @@ public class AddAppointment {
             String localTimeStamp = dateTimeUtils.getCurrentTimestamp();
             String utcTimeStamp = dateTimeUtils.convertToUTC(localTimeStamp);
             int userId = UserDAO.getUserIdByName(user);
-
+            // Checks if there is any overlap based on the Customer ID. The suggested appointment cannot be scheduled if the Customer has an appointment already scheduled within that time frame.
             if (AppointmentsDAO.isOverlap(customerId, startTimeStamp, endTimeStamp)) {
                 alertUtils.alertDisplay(14);
             } else {

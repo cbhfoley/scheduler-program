@@ -108,6 +108,7 @@ public class Login implements Initializable {
         // Below code allows bypassing login check to make testing easier. Will be commented out or removed for final production.
         // isValidLogin = true;
 
+        generalUtils.logLoginAttempt(enteredUsername, isValidLogin);
 
         if (isValidLogin) {
             setUsername(enteredUsername);

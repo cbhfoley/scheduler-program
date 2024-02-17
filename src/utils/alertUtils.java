@@ -103,6 +103,18 @@ public class alertUtils {
                 alert.setContentText("Appointment cannot be updated due to existing appointment in this time frame for the selected customer.");
                 alert.showAndWait();
             }
+            case 16 -> {
+                alert.setTitle("Welcome");
+                alert.setHeaderText("No upcoming appointments");
+                alert.setContentText("You have no upcoming appointments. Enjoy the free time!");
+                alert.showAndWait();
+            }
+            case 17 -> {
+                alert.setTitle("Welcome");
+                alert.setHeaderText("You have upcoming appointments");
+                alert.setContentText("Don't forget to check them below!");
+                alert.showAndWait();
+            }
         }
     }
 }

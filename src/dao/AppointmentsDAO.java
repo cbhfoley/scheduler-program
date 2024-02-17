@@ -9,6 +9,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 import static helper.JDBC.connection;
 
@@ -104,6 +106,30 @@ public class AppointmentsDAO {
 
     }
 
+    public static ObservableList<List<String>> getUpcomingAppointments(int userId, String nowString, String endTimeString) throws SQLException {
+        ObservableList<List<String>> appointmentsList = FXCollections.observableArrayList();
+
+        String query = "SELECT Appointment_ID, Start, End " +
+                "FROM Appointments " +
+                "WHERE User_ID = ? " +
+                "AND Start >= ? AND Start <= ?";
+
+        try (PreparedStatement statement = connection.prepareStatement(query)) {
+            statement.setInt(1, userId);
+            statement.setString(2, nowString);
+            statement.setString(3, endTimeString);
+            ResultSet resultSet = statement.executeQuery();
+            while (resultSet.next()) {
+                List<String> appointment = new ArrayList<>();
+                appointment.add(resultSet.getString("Appointment_ID"));
+                appointment.add(resultSet.getString("Start"));
+                appointment.add(resultSet.getString("End"));
+                appointmentsList.add(appointment);
+            }
+        }
+        return appointmentsList;
+    }
+
     /**
      * Method to create a list of all the appointments that are in the SQL database. It executes an SQL query to retrieve
      * all the appointment information.
@@ -195,6 +221,80 @@ public class AppointmentsDAO {
                     );
                     appointmentsList.add(appointments);
                 }
+        }
+        return appointmentsList;
+    }
+
+    public ObservableList<Appointments> getAllAppointmentsByContact(String contact) throws SQLException {
+        ObservableList<Appointments> appointmentsList = FXCollections.observableArrayList();
+        String query = "SELECT Appointments.*, Contacts.Contact_Name " +
+                "FROM Appointments " +
+                "JOIN Contacts ON Appointments.Contact_ID = Contacts.Contact_ID " +
+                "WHERE Contact_Name = ? " +
+                "ORDER BY Start";
+
+
+        try (PreparedStatement statement = connection.prepareStatement(query)) {
+            statement.setString(1, contact);
+
+             ResultSet resultSet = statement.executeQuery();
+                while (resultSet.next()) {
+                    Appointments appointments = new Appointments(
+                            resultSet.getInt("Appointment_ID"),
+                            resultSet.getString("Title"),
+                            resultSet.getString("Description"),
+                            resultSet.getString("Location"),
+                            resultSet.getString("Type"),
+                            resultSet.getString("Start"),
+                            resultSet.getString("End"),
+                            resultSet.getString("Create_Date"),
+                            resultSet.getString("Created_By"),
+                            resultSet.getString("Last_Update"),
+                            resultSet.getString("Last_Updated_By"),
+                            resultSet.getInt("Customer_ID"),
+                            resultSet.getInt("User_ID"),
+                            resultSet.getString("Contact_Name")
+                    );
+                    appointmentsList.add(appointments);
+                }
+
+            }
+        return appointmentsList;
+    }
+
+    public ObservableList<Appointments> getAllAppointmentsByUser(int userId) throws SQLException {
+        ObservableList<Appointments> appointmentsList = FXCollections.observableArrayList();
+        String query = "SELECT Appointments.*, Contacts.Contact_Name " +
+                "FROM Appointments " +
+                "JOIN Contacts ON Appointments.Contact_ID = Contacts.Contact_ID " +
+                "WHERE User_ID = ? " +
+                "ORDER BY Start";
+
+
+        try (PreparedStatement statement = connection.prepareStatement(query)) {
+            statement.setInt(1, userId);
+
+            ResultSet resultSet = statement.executeQuery();
+            while (resultSet.next()) {
+                Appointments appointments = new Appointments(
+                        resultSet.getInt("Appointment_ID"),
+                        resultSet.getString("Title"),
+                        resultSet.getString("Description"),
+                        resultSet.getString("Location"),
+                        resultSet.getString("Type"),
+                        resultSet.getString("Start"),
+                        resultSet.getString("End"),
+                        resultSet.getString("Create_Date"),
+                        resultSet.getString("Created_By"),
+                        resultSet.getString("Last_Update"),
+                        resultSet.getString("Last_Updated_By"),
+                        resultSet.getInt("Customer_ID"),
+                        resultSet.getInt("User_ID"),
+                        resultSet.getString("Contact_Name")
+                );
+                appointmentsList.add(appointments);
+            }
+
         }
         return appointmentsList;
     }

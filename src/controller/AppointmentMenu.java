@@ -75,7 +75,7 @@ public class AppointmentMenu {
 
     private void loadAppointmentsData() throws SQLException {
         AppointmentsDAO appointmentsDAO = new AppointmentsDAO();
-        ObservableList<Appointments> appointmentsList = null;
+        ObservableList<Appointments> appointmentsList;
 
         if (weekRadioButton.isSelected()) {
             LocalDateTime startOfWeek = dateTimeUtils.getStartOfWeek();
