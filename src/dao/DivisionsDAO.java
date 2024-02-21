@@ -9,7 +9,10 @@ import java.sql.SQLException;
 
 import static helper.JDBC.connection;
 
-
+/**
+ * DAO class responsible for database operations related to the first_level_divisions table.
+ *
+ */
 public class DivisionsDAO {
     /**
      * Method to create a list of the divisions corresponding to the selected country. There are 3 countries and when
@@ -68,6 +71,13 @@ public class DivisionsDAO {
         return divisionId;
     }
 
+    /**
+     * Method to retrieve the country based on the passed division name.
+     *
+     * @param divisionName
+     * @return
+     * @throws SQLException
+     */
     public String getCountryByDivision(String divisionName) throws SQLException {
         String country = null;
         int divisionId = getDivisionIdByName(divisionName);

@@ -17,6 +17,11 @@ import java.net.URL;
 import java.util.ResourceBundle;
 import java.util.TimeZone;
 
+/**
+ * Controller class for handling logging into the application. Dynamically updates based on the region/language preferences
+ * on the user's local machine. Handles logging in by validating credentials.
+ *
+ */
 public class Login implements Initializable {
 
     @FXML
@@ -42,9 +47,17 @@ public class Login implements Initializable {
     private static String username;
     private ResourceBundle bundle;
 
-
+    /**
+     * Initializes the Login controller. Updates the region label to the region based on the user preferences.
+     * Also applies the language bundle file based on the user preferences. This translates between English or French.
+     *
+     * @param url
+     * @param resourceBundle
+     */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+
+
         // Below code commented out, allows for testing to make sure language is being properly set to French.
         // Locale.setDefault(new Locale("fr"));
         String region = TimeZone.getDefault().getID();
@@ -54,6 +67,7 @@ public class Login implements Initializable {
         bundle = ResourceBundle.getBundle("resources.language");
         applyLanguage(bundle);
     }
+
 
     /**
      * Method that sets the various labels depending on the language preference on the machine. Tested by manually
@@ -106,7 +120,7 @@ public class Login implements Initializable {
 
         boolean isValidLogin = userDAO.validateLogin(enteredUsername, enteredPassword);
         // Below code allows bypassing login check to make testing easier. Will be commented out or removed for final production.
-        // isValidLogin = true;
+        //isValidLogin = true;
 
         generalUtils.logLoginAttempt(enteredUsername, isValidLogin);
 

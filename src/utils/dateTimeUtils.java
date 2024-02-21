@@ -4,6 +4,10 @@ import java.time.*;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.TemporalAdjusters;
 
+/**
+ * Utils class set up to handle the time related methods within the program.
+ *
+ */
 public class dateTimeUtils {
     private static final DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 

@@ -9,6 +9,10 @@ import java.sql.SQLException;
 
 import static helper.JDBC.connection;
 
+/**
+ * DAO class responsible for database operations related to the country table.
+ *
+ */
 public class CountryDAO {
 
 

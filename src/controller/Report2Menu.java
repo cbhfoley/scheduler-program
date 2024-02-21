@@ -23,6 +23,11 @@ import java.sql.SQLException;
 
 import static utils.dateTimeUtils.convertToLocal;
 
+/**
+ * Controller class responsible for displaying Report 2. Allows a user to select a contact and displays appointment
+ *  information for that contact in a table view.
+ *
+ */
 public class Report2Menu {
     @FXML
     private TableView<Appointments> appointmentsTableView;
@@ -53,7 +58,7 @@ public class Report2Menu {
 
     public void initialize() throws SQLException {
         contactsDAO = new ContactsDAO();
-
+        // Set up cell value factories for table columns using lambda expressions
         apptIdColumn.setCellValueFactory(cellData -> new SimpleIntegerProperty(cellData.getValue().getApptId()).asObject());
         titleColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getTitle()));
         descriptionColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getDescription()));
@@ -64,6 +69,7 @@ public class Report2Menu {
         custIdColumn.setCellValueFactory(cellData -> new SimpleIntegerProperty(cellData.getValue().getCustomerId()).asObject());
         userIdColumn.setCellValueFactory(cellData -> new SimpleIntegerProperty(cellData.getValue().getUserId()).asObject());
         contactColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getContact()));
+        // Each lambda expression extracts a property value from the cell data and creates a corresponding object property
 
         populateContactsComboBox();
     }
@@ -83,10 +89,21 @@ public class Report2Menu {
 
     }
 
+    /**
+     * On action event for the contact combo box that calls the loadAppointmentData() method.
+     *
+     * @throws SQLException
+     */
     public void handleContactComboBoxAction() throws SQLException {
         loadAppointmentData();
     }
 
+    /**
+     * Method to load the appointment data into the table. This passes in the contact to the method to retrieve the
+     * desired appointments.
+     *
+     * @throws SQLException
+     */
     private void loadAppointmentData() throws SQLException {
         AppointmentsDAO appointmentsDAO = new AppointmentsDAO();
         ObservableList<Appointments> appointmentsList;

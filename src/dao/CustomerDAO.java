@@ -12,11 +12,14 @@ import java.sql.SQLException;
 
 import static helper.JDBC.connection;
 
-
+/**
+ * DAO class responsible for database operations related to the customers table.
+ *
+ */
 public class CustomerDAO {
 
     /**
-     * Method to create a list of all the customers that are in the SQL database. It executes an SQL query to retrieve
+     * Method to create a list of all the customers that are in the SQL database. Executes an SQL query to retrieve
      * all the customer information. It displays the division as plain text as opposed to the division ID.
      *
      * @return
@@ -77,6 +80,14 @@ public class CustomerDAO {
         }
     }
 
+    /**
+     * Method to update a customer based on user input information. It accepts a Customer created via the Customer model
+     * and executes an SQL statement to update it within the database.
+     *
+     * @param customerId
+     * @param updatedCustomer
+     * @throws SQLException
+     */
     public void updateCustomer(int customerId, Customer updatedCustomer) throws SQLException {
         String query = "UPDATE customers " +
                 "SET Customer_Name = ?, Address = ?, Postal_Code = ?, Phone = ?, " +
@@ -96,6 +107,13 @@ public class CustomerDAO {
             statement.executeUpdate();
             }
         }
+
+    /**
+     * Method to delete a customer from the customers table based on their Customer ID.
+     *
+      * @param customerId
+     * @throws SQLException
+     */
     public void deleteCustomer(int customerId) throws SQLException {
         String query = "DELETE FROM customers WHERE Customer_ID = ?";
 
@@ -105,6 +123,12 @@ public class CustomerDAO {
         }
     }
 
+    /**
+     * Method that retrieves all the customer names to display in combo boxes for the add/edit appointment view.
+     *
+     * @return
+     * @throws SQLException
+     */
     public ObservableList<String> getAllCustomerNames() throws SQLException {
         ObservableList<String> customerNames = FXCollections.observableArrayList();
 
@@ -120,6 +144,13 @@ public class CustomerDAO {
         return customerNames;
     }
 
+    /**
+     * Method that retrieves a customer ID based on the passed customer name.
+     *
+     * @param customer
+     * @return
+     * @throws SQLException
+     */
     public int getCustomerIdByName(String customer) throws SQLException {
         int customerId = -1;
 
@@ -137,6 +168,13 @@ public class CustomerDAO {
         return customerId;
     }
 
+    /**
+     * Method to retrieve the customer name based on the passed customer ID.
+     *
+     * @param customerId
+     * @return
+     * @throws SQLException
+     */
     public String getCustomerNameById(int customerId) throws SQLException {
         String customer = null;
 

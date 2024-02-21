@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="400.0" prefWidth="655.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.Report1Menu">
+   <children>
+      <Button layoutX="439.0" layoutY="361.0" mnemonicParsing="false" onAction="#backButtonAction" text="Back" />
+      <ComboBox fx:id="reportTypeComboBox" layoutX="103.0" layoutY="116.0" onAction="#handleTypeSelection" prefWidth="150.0" promptText="Select type..." />
+      <ComboBox fx:id="reportMonthComboBox" layoutX="380.0" layoutY="116.0" onAction="#handleMonthSelection" prefWidth="150.0" promptText="Select month..." />
+      <Label layoutX="133.0" layoutY="176.0" text="All appointments by type:" />
+      <Label layoutX="131.0" layoutY="218.0" text="All appointments by month:" />
+      <Label layoutX="133.0" layoutY="261.0" text="Appintments by type/month only:" />
+      <TextField fx:id="byTypeTextField" editable="false" layoutX="326.0" layoutY="172.0" />
+      <TextField fx:id="byMonthTextField" editable="false" layoutX="326.0" layoutY="214.0" />
+      <TextField fx:id="byBothTextField" editable="false" layoutX="326.0" layoutY="257.0" />
+      <Label fx:id="currentYearLabel" layoutX="445.0" layoutY="92.0" text="XXXX" />
+      <Label layoutX="165.0" layoutY="92.0" text="Type" />
+      <Label layoutX="32.0" layoutY="14.0" text="Totals by Type and Month">
+         <font>
+            <Font name="System Bold" size="48.0" />
+         </font>
+      </Label>
+   </children>
+</AnchorPane>

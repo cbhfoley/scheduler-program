@@ -1,5 +1,10 @@
 package model;
 
+/**
+ * Class for the user model.
+ * Ended up not needing this, but leaving in here.
+ *
+ */
 public class User {
     private int userID;
     private String userName;

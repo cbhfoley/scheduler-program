@@ -9,6 +9,10 @@ import java.sql.SQLException;
 
 import static helper.JDBC.connection;
 
+/**
+ * DAO class responsible for database operations related to the users table.
+ *
+ */
 public class UserDAO {
     /**
      * Returns User_ID from the database based on the User_Name passed to it.
@@ -34,7 +38,8 @@ public class UserDAO {
     }
 
 
-    /** Method to validate login. It accepts the entered in username and password from the "login" view and returns
+    /**
+     * Method to validate login. It accepts the entered in username and password from the "login" view and returns
      * true/false depending on the user input
      *
      * @param userName
@@ -59,6 +64,11 @@ public class UserDAO {
 
     }
 
+    /**
+     * Method to return all usernames within the database for displaying in various combo boxes.
+     * @return
+     * @throws SQLException
+     */
     public ObservableList<String> getAllUserNames() throws SQLException {
         ObservableList<String> userNames = FXCollections.observableArrayList();
 
@@ -74,6 +84,13 @@ public class UserDAO {
         return userNames;
     }
 
+    /**
+     * Method to retrieve a username based on the passed user ID.
+     *
+     * @param userId
+     * @return
+     * @throws SQLException
+     */
     public String getUserNameById(int userId) throws SQLException {
         String user = null;
 

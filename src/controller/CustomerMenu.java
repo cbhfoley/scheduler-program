@@ -25,37 +25,41 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.util.Optional;
 
+/**
+ * Controller class to display customer information in a table view. Users can interact in various ways to add, delete,
+ * or edit an appointment.
+ *
+ */
 public class CustomerMenu {
     @FXML
     private TableView<Customer> customerTableView;
-
     @FXML
     private TableColumn<Customer, Integer> idColumn;
-
     @FXML
     private TableColumn<Customer, String> nameColumn;
-
     @FXML
     private TableColumn<Customer, String> phoneColumn;
-
     @FXML
     private TableColumn<Customer, String> addressColumn;
-
     @FXML
     private TableColumn<Customer, String> zipcodeColumn;
-
     @FXML
     private TableColumn<Customer, String> createdDateColumn;
-
     @FXML
     private TableColumn<Customer, String> createdByColumn;
-
     @FXML
     private TableColumn<Customer, String> regionColumn;
-
     private Customer selectedCustomer;
+
+    /**
+     * Initializes the CustomerMenu controller.
+     * Sets up the cell value factories for table columns and then calls the loadCustomerData() method.
+     *
+     * @throws SQLException
+     */
     @FXML
     public void initialize() throws SQLException {
+        // Set up cell value factories for table columns using lambda expressions
         idColumn.setCellValueFactory(cellData -> new SimpleIntegerProperty(cellData.getValue().getCustomerId()).asObject());
         nameColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getCustomerName()));
         phoneColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getPhone()));
@@ -64,13 +68,14 @@ public class CustomerMenu {
         createdDateColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getCreateDate()));
         createdByColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getCreatedBy()));
         regionColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getDivision()));
+        // Each lambda expression extracts a property value from the cell data and creates a corresponding object property
 
         loadCustomerData();
     }
 
     /**
      * Method to load the customer data from the SQL database into the customer table view.
-     * It converts their created date to the local time the user is viewing it in as well.
+     * It converts their created date to the local time of the machine based on the user settings.
      *
      * @throws SQLException
      */
@@ -114,8 +119,8 @@ public class CustomerMenu {
     }
 
     /**
-     * Loads the edit customer view when pressed.
-     * If a customer is not selected it displays an error stating as such.
+     * Checks to make sure a customer is selected when clicked. If no customer is selected displays an alert indicating as such.
+     * If a customer is selected it loads the editCustomer scene and passes the selected customer.
      *
      * @param actionEvent
      * @throws IOException
@@ -143,8 +148,7 @@ public class CustomerMenu {
      * Deletes the selected customer, if no customer selected it displays a message indicating as such.
      * If also deletes any appointments the customer might have before deleting the customer. It deletes their appointments
      * based off of the customer ID.
-     * <p>
-     * The user first must confirm they want to delete the customer (and any of their appointments) by pressing YES.
+     * The user must first confirm they want to delete the customer and ALL (if any) of their appointments by pressing YES.
      * If NO is pressed, or they click the X it will not delete any records.
      *
      * @param actionEvent

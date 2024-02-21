@@ -16,10 +16,15 @@ import javafx.stage.Stage;
 import model.Customer;
 import utils.alertUtils;
 import utils.dateTimeUtils;
+import utils.generalUtils;
 
 import java.io.IOException;
 import java.sql.SQLException;
-
+/**
+ * Controller class for handling the updating of customers.
+ * Allows users to input customer parameters and update them in the database.
+ *
+ */
 public class EditCustomer {
 
     @FXML
@@ -44,13 +49,21 @@ public class EditCustomer {
     private CustomerDAO customerDAO;
     private Customer customerToEdit;
 
+    /**
+     * Initializes the AddCustomer controller. The createdByTextField filled out with the logged-in user. This cannot be edited.
+     * Also sets the countryComboBox to the countries listed in the database. Once a country is selected it will
+     * load the corresponding divisions into the divisionsComboBox. The user editable fields are also prefilled out
+     * with the selected customer from the CustomerMenu controller.
+     *
+     * @throws SQLException
+     */
     @FXML
     public void initialize() throws SQLException {
         countryDAO = new CountryDAO();
         divisionsDAO = new DivisionsDAO();
         customerDAO = new CustomerDAO();
 
-        editedByTextField.setPromptText(getLoginUsername());
+        editedByTextField.setPromptText(generalUtils.getLoginUsername());
 
         // Loads countries into the first combo box
         loadCountriesData();
@@ -66,28 +79,34 @@ public class EditCustomer {
         });
     }
 
-    private String getLoginUsername() {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/login.fxml"));
-        try {
-            Parent parent = loader.load();
-            Login loginController = loader.getController();
-            return loginController.getUsername();
-        } catch (IOException e) {
-            e.printStackTrace();
-            return null;
-        }
-    }
+    /**
+     * Method to load the country data into the combo box.
+     *
+     * @throws SQLException
+     */
     private void loadCountriesData() throws SQLException {
         ObservableList<String> countries = countryDAO.getAllCountryNames();
 
         countryComboBox.setItems(countries);
     }
 
+    /**
+     * Method to load the division data into the combo box.
+     *
+     * @param selectedCountry
+     * @throws SQLException
+     */
     private void loadDivisionsData(String selectedCountry) throws SQLException {
         ObservableList<String> divisions = divisionsDAO.getDivisionByCountry(selectedCountry);
         divisionComboBox.setItems(divisions);
     }
 
+    /**
+     * Loads the customerMenu scene if the cancel button is clicked.
+     *
+     * @param actionEvent
+     * @throws IOException
+     */
     public void exitButtonAction(ActionEvent actionEvent) throws IOException {
         Parent parent = FXMLLoader.load(getClass().getResource("/view/customerMenu.fxml"));
         Scene scene = new Scene(parent);
@@ -95,14 +114,21 @@ public class EditCustomer {
         stage.setScene(scene);
         stage.show();
     }
-
+    /**
+     * Updates the customer to the database when clicked. Validates that the information is input correctly by
+     * checking if the user filled out the text fields/combo boxes properly.
+     *
+     * @param actionEvent
+     * @throws IOException
+     * @throws SQLException
+     */
     public void saveButtonAction(ActionEvent actionEvent) throws IOException, SQLException {
         String customerName = customerNameTextField.getText();
         String phone = customerPhoneTextField.getText();
         String address = customerAddressTextField.getText();
         String postalCode = customerPostalTextField.getText();
         String division = divisionComboBox.getValue();
-        String user = getLoginUsername();
+        String user = generalUtils.getLoginUsername();
 
         String localTimeStamp = dateTimeUtils.getCurrentTimestamp();
         String utcTimeStamp = dateTimeUtils.convertToUTC(localTimeStamp);
@@ -126,11 +152,22 @@ public class EditCustomer {
         }
     }
 
+    /**
+     * Sets the customer to edit to the one that was selected from the CustomerMenu controller.
+     * Calls the populateFieldsWithCustomerData() method.
+     *
+     * @param customerToEdit
+     */
     public void setCustomerToEdit(Customer customerToEdit) {
         this.customerToEdit = customerToEdit;
         populateFieldsWithCustomerData();
     }
 
+    /**
+     * Fills the form out with the selected customer attributes. Pre-selects the combo boxes and fills out the
+     * text fields accordingly.
+     *
+     */
     private void populateFieldsWithCustomerData() {
         try {
             int customerId = customerToEdit.getCustomerId();

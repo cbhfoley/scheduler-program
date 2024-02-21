@@ -22,6 +22,11 @@ import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.util.Optional;
 
+/**
+ * Controller class to display appointment information in a table view. Users can interact in various ways to add, delete,
+ * or edit an appointment. Also allows for filtering utilizing radio buttons.
+ *
+ */
 public class AppointmentMenu {
     @FXML
     private TableView<Appointments> appointmentsTableView;
@@ -53,8 +58,15 @@ public class AppointmentMenu {
 
     private Appointments selectedAppointment;
 
+    /**
+     * Initializes the AppointmentMenu controller.
+     * Sets up the cell value factories for table columns and then calls the loadAppointmentsData method.
+     *
+     * @throws SQLException
+     */
     @FXML
     public void initialize() throws SQLException {
+        // Set up cell value factories for table columns using lambda expressions
         apptIdColumn.setCellValueFactory(cellData -> new SimpleIntegerProperty(cellData.getValue().getApptId()).asObject());
         titleColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getTitle()));
         descriptionColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getDescription()));
@@ -65,14 +77,28 @@ public class AppointmentMenu {
         custIdColumn.setCellValueFactory(cellData -> new SimpleIntegerProperty(cellData.getValue().getCustomerId()).asObject());
         userIdColumn.setCellValueFactory(cellData -> new SimpleIntegerProperty(cellData.getValue().getUserId()).asObject());
         contactColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getContact()));
+        // Each lambda expression extracts a property value from the cell data and creates a corresponding object property
 
         loadAppointmentsData();
     }
 
+    /**
+     * Calls the convertToLocal which converts the passed timestamp to the users local time (based on their machine settings).
+     *
+     * @param utcTimestamp
+     * @return
+     */
     private String convertToLocal(String utcTimestamp) {
         return dateTimeUtils.convertToLocal(utcTimestamp);
     }
 
+    /**
+     * Method to load the appointments data into the table view.
+     * When called it checks which radio button is selected and fills the table with the correct appointments.
+     * When the form is first initialized the "All" radio button is selected which loads all appointments in the database.
+     *
+     * @throws SQLException
+     */
     private void loadAppointmentsData() throws SQLException {
         AppointmentsDAO appointmentsDAO = new AppointmentsDAO();
         ObservableList<Appointments> appointmentsList;
@@ -100,11 +126,22 @@ public class AppointmentMenu {
         appointmentsTableView.setItems(appointmentsList);
     }
 
+    /**
+     * Handler that calls the loadAppointmentsData() method when a new radio button is selected.
+     *
+     * @throws SQLException
+     */
     @FXML
     private void handleRadioButtonAction() throws SQLException {
         loadAppointmentsData();
     }
 
+    /**
+     * Loads the mainMenu scene when clicked.
+     *
+     * @param actionEvent
+     * @throws IOException
+     */
     public void mainMenuButtonAction(ActionEvent actionEvent) throws IOException {
         Parent parent = FXMLLoader.load(getClass().getResource("/view/mainMenu.fxml"));
         Scene scene = new Scene(parent);
@@ -114,6 +151,12 @@ public class AppointmentMenu {
         stage.show();
     }
 
+    /**
+     * Loads the addAppointment scene when clicked.
+     *
+     * @param actionEvent
+     * @throws IOException
+     */
     public void addAppointmentButtonAction(ActionEvent actionEvent) throws IOException {
         Parent parent = FXMLLoader.load(getClass().getResource("/view/addAppointment.fxml"));
         Scene scene = new Scene(parent);
@@ -123,6 +166,13 @@ public class AppointmentMenu {
         stage.show();
     }
 
+    /**
+     * Checks to make sure an appointment is selected when clicked. If no appointment is selected displays an alert indicating as such.
+     * If an appointment is selected it loads the editAppointment scene and passes the selected appointment.
+     *
+     * @param actionEvent
+     * @throws IOException
+     */
     public void editAppointmentButtonAction(ActionEvent actionEvent) throws IOException {
         selectedAppointment = appointmentsTableView.getSelectionModel().getSelectedItem();
         if (selectedAppointment == null) {
@@ -130,7 +180,7 @@ public class AppointmentMenu {
         } else {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/editAppointment.fxml"));
             Parent parent = loader.load();
-
+            // Passes the selected appointment to the EditAppointment controller
             EditAppointment editAppointmentController = loader.getController();
             editAppointmentController.setAppointmentToEdit(selectedAppointment);
 
@@ -142,11 +192,18 @@ public class AppointmentMenu {
         }
     }
 
+    /**
+     * Checks to make sure an appointment is selected when clicked. If no appointment is selected displays an alert indicating as such.
+     * If an appointment is selected it calls the method do delete the selected appointment from the database.
+     *
+     * @throws SQLException
+     */
     public void deleteAppointmentButtonAction() throws SQLException {
         selectedAppointment = appointmentsTableView.getSelectionModel().getSelectedItem();
         if (selectedAppointment == null) {
             alertUtils.alertDisplay(11);
         } else {
+            // Alert that confirms if the user wants to do this by either pressing YES or NO. If X is pressed it's the same as NO.
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Confirmation");
             alert.setHeaderText("Deletion Confirmation");
@@ -155,6 +212,7 @@ public class AppointmentMenu {
             alert.getButtonTypes().setAll(ButtonType.YES, ButtonType.NO);
             Optional<ButtonType> result = alert.showAndWait();
             if (result.orElse(ButtonType.NO) == ButtonType.YES){
+                // Deletes the appointment. Displays an alert indicating as such, and reloads the appointments data to reflect the deletion.
                 deleteAppointment();
                 alertUtils.alertDisplay(12);
                 loadAppointmentsData();
@@ -162,6 +220,12 @@ public class AppointmentMenu {
         }        
     }
 
+    /**
+     * Method that calls the delete appointment method in the appointmentsDAO. Passes the selected appointments appointment ID
+     * for the query to locate and delete the appointment.
+     *
+     * @throws SQLException
+     */
     private void deleteAppointment() throws SQLException {
         AppointmentsDAO appointmentsDAO = new AppointmentsDAO();
         appointmentsDAO.deleteAppointment(selectedAppointment.getApptId());

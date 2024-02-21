@@ -25,6 +25,11 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 
+/**
+ * Controller class for the main menu of the application. Displays upcoming appointments in a table view for a user to view.
+ * Handles navigation to the various subsections of the application.
+ *
+ */
 public class MainMenu {
     @FXML
     private TableView<List<String>> appointmentsTableView;
@@ -65,12 +70,11 @@ public class MainMenu {
         appointmentsTableView.setItems(upcomingAppointments);
 
         if (!alertShown) {
+            // Displays an alert after the form is loaded indicating if there are any upcoming appointments or not.
+            // Lambda used to keep code concise and simple for this one-off alert.
             Platform.runLater(() -> {
-                if (upcomingAppointments.isEmpty()) {
-                    alertUtils.alertDisplay(16);
-                } else {
-                    alertUtils.alertDisplay(17);
-                }
+                int alertType = upcomingAppointments.isEmpty() ? 16 : 17;
+                alertUtils.alertDisplay(alertType);
                 alertShown = true;
             });
         }

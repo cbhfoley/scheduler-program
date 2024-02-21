@@ -1,5 +1,10 @@
 package model;
 
+/**
+ * Class for the contact model.
+ * Ended up not needing this, but leaving in here.
+ * 
+ */
 public class Contact {
     private int contactId;
     private String contactName;

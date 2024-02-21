@@ -23,6 +23,11 @@ import java.sql.SQLException;
 
 import static utils.dateTimeUtils.convertToLocal;
 
+/**
+ * Controller class responsible for displaying Report 3. Allows a user to select a user and displays appointment
+ *  information for that user in a table view.
+ *
+ */
 public class Report3Menu {
     @FXML
     private TableView<Appointments> appointmentsTableView;
@@ -53,7 +58,7 @@ public class Report3Menu {
 
     public void initialize() throws SQLException {
         userDAO = new UserDAO();
-
+        // Set up cell value factories for table columns using lambda expressions
         apptIdColumn.setCellValueFactory(cellData -> new SimpleIntegerProperty(cellData.getValue().getApptId()).asObject());
         titleColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getTitle()));
         descriptionColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getDescription()));
@@ -74,6 +79,7 @@ public class Report3Menu {
             return new SimpleStringProperty(userName);
         });
         contactColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getContact()));
+        // Each lambda expression extracts a property value from the cell data and creates a corresponding object property
 
         populateUsersComboBox();
     }

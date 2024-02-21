@@ -2,6 +2,10 @@ package utils;
 
 import javafx.scene.control.Alert;
 
+/**
+ * Class set up to handle alerts throughout the program.
+ *
+ */
 public class alertUtils {
     /**
      * Different alerts based on the various errors or confirmations that need to be displayed to the user.

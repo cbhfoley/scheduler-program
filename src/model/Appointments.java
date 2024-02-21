@@ -1,5 +1,9 @@
 package model;
 
+/**
+ * Class for the appointments model.
+ *
+ */
 public class Appointments {
     private int apptId;
     private String title;

@@ -2,6 +2,11 @@ package model;
 
 import java.time.LocalDateTime;
 
+/**
+ * Class for the divisions model.
+ * Ended up not needing this, but leaving in here.
+ *
+ */
 public class Divisions {
 
     private int divisionId;

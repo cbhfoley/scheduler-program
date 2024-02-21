@@ -25,6 +25,11 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 
+/**
+ * Controller class for handling the editing of existing appointments.
+ * Allows users to update appointment parameters and save the changes to the database.
+ *
+ */
 public class EditAppointment {
     @FXML
     private DatePicker startDatePicker;
@@ -57,7 +62,13 @@ public class EditAppointment {
     private Appointments appointmentToEdit;
     private static final DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 
-
+    /**
+     * Initializes the EditAppointment controller with the combo boxes populated with their respective data. Includes listeners to allow for a
+     * better UX when choosing a date/time for an appointment. Text fields and combo boxes are set to the selected appointment from the AppointmentMenu
+     * controller.
+     *
+     * @throws SQLException
+     */
     @FXML
     private void initialize() throws SQLException {
         contactsDAO = new ContactsDAO();
@@ -83,21 +94,40 @@ public class EditAppointment {
         });
     }
 
+    /**
+     * Method to set the items in the userComboBox to the users in the database.
+     *
+     * @throws SQLException
+     */
     private void populateUserComboBox() throws SQLException {
         ObservableList<String> userNames = userDAO.getAllUserNames();
         userComboBox.setItems(userNames);
     }
 
+    /**
+     * Method to set the items in the customerComboBox to the customers in the database.
+     *
+     * @throws SQLException
+     */
     private void populateCustomerComboBox() throws SQLException {
         ObservableList<String> customerNames = customerDAO.getAllCustomerNames();
         customerComboBox.setItems(customerNames);
     }
 
+    /**
+     * Method to set the items in the contactsComboBox to the contacts in the database.
+     *
+     * @throws SQLException
+     */
     private void populateContactsComboBox() throws SQLException {
         ObservableList<String> contacts = contactsDAO.getAllContacts();
         contactComboBox.setItems(contacts);
     }
 
+    /**
+     * Method to set the timeComboBoxes with times incrementing every 15 minutes from 00:00 to 23:45.
+     *
+     */
     private void populateTimeComboBoxes() {
         for (int hour = 0; hour <24; hour++) {
             for (int minute = 0; minute <60; minute += 15) {
@@ -108,6 +138,12 @@ public class EditAppointment {
         }
     }
 
+    /**
+     * Reloads the appointmentMenu without saving anything to the database if the Cancel button is clicked.
+     *
+     * @param actionEvent
+     * @throws IOException
+     */
     public void cancelButtonAction(ActionEvent actionEvent) throws IOException {
         Parent parent = FXMLLoader.load(getClass().getResource("/view/appointmentMenu.fxml"));
         Scene scene = new Scene(parent);
@@ -116,7 +152,16 @@ public class EditAppointment {
         generalUtils.centerOnScreen(stage);
         stage.show();
     }
-
+    /**
+     * Updates the proposed appointment in the database when clicked. Has various data validation checks to ensure the suggested appointment
+     * is allowed by the database and also checks for other various things such as the suggested time compared to other appointments
+     * and the pre-defined business hours. Does not compare the new proposed time to the selected appointments existing time since that is
+     * being changed.
+     *
+     * @param actionEvent
+     * @throws SQLException
+     * @throws IOException
+     */
     public void saveButtonAction(ActionEvent actionEvent) throws SQLException, IOException {
         String title = titleTextField.getText();
         String description = descriptionTextField.getText();
@@ -171,11 +216,22 @@ public class EditAppointment {
 
     }
 
+    /**
+     * Sets the appointment to edit based on the selected appointment from the AppointmentMenu controller.
+     * Calls the method to populate the fields with the corresponding data.
+     *
+     * @param appointmentToEdit
+     */
     public void setAppointmentToEdit(Appointments appointmentToEdit) {
         this.appointmentToEdit = appointmentToEdit;
         populateFieldsWithAppointmentData();
     }
 
+    /**
+     * Method that fills the form out with the selected appointment from the AppointmentMenu controller.
+     * The combo boxes are also pre-selected and text fields are filled out.
+     *
+     */
     private void populateFieldsWithAppointmentData() {
         try {
             int appointmentId = appointmentToEdit.getApptId();
