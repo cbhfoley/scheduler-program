@@ -9,7 +9,7 @@ import javafx.stage.Stage;
 
 
 public class Main extends Application {
-    // Final Commit - Attempt 1
+    // Final Commit 2 - Attempt 2
     @Override
     public void start(Stage stage) throws Exception {
         Parent root = FXMLLoader.load(getClass().getResource("/view/login.fxml"));

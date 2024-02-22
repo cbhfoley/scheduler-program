@@ -7,39 +7,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="501cbc56-7a06-46f9-b02c-818bbbf67cd8" name="Changes" comment="Task 1 - Twelfth Commit">
-      <change afterPath="$PROJECT_DIR$/src/controller/Report1Menu.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/view/report1Menu.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+    <list default="true" id="501cbc56-7a06-46f9-b02c-818bbbf67cd8" name="Changes" comment="Task 1 - Final Commit - Attempt 1">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/controller/AddAppointment.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/controller/AddAppointment.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/controller/AddCustomer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/controller/AddCustomer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/login_activity.txt" beforeDir="false" afterPath="$PROJECT_DIR$/login_activity.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/readme.txt" beforeDir="false" afterPath="$PROJECT_DIR$/readme.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/controller/AppointmentMenu.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/controller/AppointmentMenu.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/controller/CustomerMenu.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/controller/CustomerMenu.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/controller/EditAppointment.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/controller/EditAppointment.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/controller/EditCustomer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/controller/EditCustomer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/controller/Login.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/controller/Login.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/controller/MainMenu.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/controller/MainMenu.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/controller/Report2Menu.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/controller/Report2Menu.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/controller/Report3Menu.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/controller/Report3Menu.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/controller/ReportsMenu.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/controller/ReportsMenu.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/dao/AppointmentsDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/dao/AppointmentsDAO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/dao/ContactsDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/dao/ContactsDAO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/dao/CountryDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/dao/CountryDAO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/dao/CustomerDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/dao/CustomerDAO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/dao/DivisionsDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/dao/DivisionsDAO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/dao/UserDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/dao/UserDAO.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/model/Appointments.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/model/Appointments.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/model/Contact.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/model/Contact.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/model/Country.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/model/Country.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/model/Customer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/model/Customer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/model/Divisions.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/model/Divisions.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/model/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/model/User.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/utils/alertUtils.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/utils/alertUtils.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/utils/dateTimeUtils.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/utils/dateTimeUtils.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/utils/generalUtils.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/utils/generalUtils.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/view/addCustomer.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/view/addCustomer.fxml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -67,19 +40,19 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "ignore.virus.scanning.warn.message": "true",
-    "last_opened_file_path": "C:/Users/LabUser/IdeaProjects/C195_Project",
-    "project.structure.last.edited": "Libraries",
-    "project.structure.proportion": "0.15",
-    "project.structure.side.proportion": "0.2",
-    "run.code.analysis.last.selected.profile": "pProject Default",
-    "settings.editor.selected.configurable": "preferences.lookFeel"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/LabUser/IdeaProjects/C195_Project&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Libraries&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
+    &quot;run.code.analysis.last.selected.profile&quot;: &quot;pProject Default&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.lookFeel&quot;
   }
-}]]></component>
+}</component>
   <component name="RunManager">
     <configuration name="C195_Project" type="Application" factoryName="Application" singleton="false">
       <option name="MAIN_CLASS_NAME" value="main.Main" />
@@ -195,7 +168,15 @@
       <option name="project" value="LOCAL" />
       <updated>1708189170820</updated>
     </task>
-    <option name="localTasksCounter" value="13" />
+    <task id="LOCAL-00013" summary="Task 1 - Final Commit - Attempt 1">
+      <option name="closed" value="true" />
+      <created>1708483825164</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1708483825164</updated>
+    </task>
+    <option name="localTasksCounter" value="14" />
     <servers />
   </component>
   <component name="Vcs.Log.History.Properties">
@@ -233,7 +214,8 @@
     <MESSAGE value="Task 1 - Tenth Commit" />
     <MESSAGE value="Task 1 - Eleventh Commit" />
     <MESSAGE value="Task 1 - Twelfth Commit" />
-    <option name="LAST_COMMIT_MESSAGE" value="Task 1 - Twelfth Commit" />
+    <MESSAGE value="Task 1 - Final Commit - Attempt 1" />
+    <option name="LAST_COMMIT_MESSAGE" value="Task 1 - Final Commit - Attempt 1" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

@@ -1,13 +1,13 @@
 C195 - Scheduling Application 
 Author: Chad Foley
-Application version: 1.0
-2/20/2024
+Application version: 1.1 (second submission)
+2/22/2024
 
 PURPOSE: 
 To interact with existing database to allow displaying and manipulation of data within
 the database. Allows for creating, reading, updating and deleting (CRUD) of both customers and appointments. 
 
-Also has some useful built in reporting features to display data based on user selection.
+Also has some useful built-in reporting features to display data based on user selection.
 
 VERSION INFORMATION:
 IDE VERSION: IntelliJ IDEA 2023.2.2 (Community Edition)
@@ -26,3 +26,12 @@ ADDITIONAL REPORT:
 The additional report I chose displays a schedule of all of a specified users (using a combo box) appointments. 
 The display is also slightly altered from other appointment displays to display the User_Name, instead of the User_ID
 for readability.
+
+SECOND SUBMISSION 2/22: First submission was sent back for section A3a.
+
+    Appointments are added and updated by the App. While a  deletion confirmation message is displayed, the assessment
+    instructions state that the deletion confirmation should include the Appointment ID and Type.
+    (Please see attached document with screenshot.)
+
+This functionality has been added so the confirmation message includes this information. It is included in the
+deleteAppointmentButtonAction() method located in my AppointmentMenu controller.

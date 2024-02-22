@@ -204,20 +204,26 @@ public class AppointmentMenu {
             alertUtils.alertDisplay(11);
         } else {
             // Alert that confirms if the user wants to do this by either pressing YES or NO. If X is pressed it's the same as NO.
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Confirmation");
-            alert.setHeaderText("Deletion Confirmation");
-            alert.setContentText("This will delete the selected appointment. " +
+            Alert alertConf = new Alert(Alert.AlertType.CONFIRMATION);
+            alertConf.setTitle("Confirmation");
+            alertConf.setHeaderText("Deletion Confirmation");
+            alertConf.setContentText("This will delete the selected appointment. " +
                     "Are you sure you want to do this?");
-            alert.getButtonTypes().setAll(ButtonType.YES, ButtonType.NO);
-            Optional<ButtonType> result = alert.showAndWait();
+            alertConf.getButtonTypes().setAll(ButtonType.YES, ButtonType.NO);
+            Optional<ButtonType> result = alertConf.showAndWait();
             if (result.orElse(ButtonType.NO) == ButtonType.YES){
                 // Deletes the appointment. Displays an alert indicating as such, and reloads the appointments data to reflect the deletion.
                 deleteAppointment();
-                alertUtils.alertDisplay(12);
+                // Displays an alert indicating success of deleted appoint with the appointment ID and type
+                Alert alertSuccess = new Alert(Alert.AlertType.INFORMATION);
+                alertSuccess.setTitle("Success");
+                alertSuccess.setHeaderText("Appointment Deleted");
+                alertSuccess.setContentText("Appointment #" + selectedAppointment.getApptId() + " of type (" + selectedAppointment.getType() +
+                        ") has been successfully deleted.");
+                alertSuccess.showAndWait();
                 loadAppointmentsData();
             }
-        }        
+        }
     }
 
     /**
